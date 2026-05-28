@@ -1,0 +1,2283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gym Exercise Form Guide App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gymBg: "#121212",
+            gymPanel: "#1b1b1b",
+            gymCard: "#242424",
+            neon: "#39FF14",
+            neonYellow: "#F8FF24"
+          },
+          boxShadow: {
+            neon: "0 0 28px rgba(57, 255, 20, 0.22)"
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at top left, rgba(57, 255, 20, 0.12), transparent 420px),
+        radial-gradient(circle at bottom right, rgba(248, 255, 36, 0.09), transparent 420px),
+        #121212;
+    }
+
+    select {
+      background-image:
+        linear-gradient(45deg, transparent 50%, #39FF14 50%),
+        linear-gradient(135deg, #39FF14 50%, transparent 50%);
+      background-position:
+        calc(100% - 20px) calc(50% + 1px),
+        calc(100% - 14px) calc(50% + 1px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+    }
+
+    .glass-panel {
+      background: rgba(27, 27, 27, 0.92);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-title {
+      font-size: clamp(2.25rem, 5vw, 4.4rem);
+      line-height: 1;
+      letter-spacing: 0;
+    }
+
+    .visual-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 2;
+      min-height: 260px;
+      background: #050505;
+    }
+
+    #exerciseVisual {
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      display: block;
+      background: #050505;
+    }
+
+    #exerciseVisual svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+    }
+
+    #exerciseVisual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      object-fit: cover;
+      background: #050505;
+    }
+
+    .photo-loading {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      min-height: 260px;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(circle at center, rgba(57, 255, 20, 0.12), transparent 320px),
+        #050505;
+      color: #39FF14;
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 0.2em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    #appContent {
+      display: none;
+    }
+
+    #appContent.unlocked {
+      display: flex;
+    }
+  </style>
+</head>
+<body class="min-h-screen text-white antialiased">
+  <section id="accessGate" class="flex min-h-screen items-center justify-center px-4 py-8">
+    <div class="w-full max-w-md rounded-lg border border-neon/40 bg-gymPanel/95 p-6 shadow-neon">
+      <p class="text-xs font-black uppercase tracking-[0.28em] text-neon">Private Access</p>
+      <h1 class="mt-3 text-3xl font-black tracking-tight text-white">Gym Exercise Form Guide FOR BESTI</h1>
+      <p class="mt-3 text-sm leading-6 text-zinc-300">
+        Access code enter karo to app open hogi.
+      </p>
+
+      <form id="accessForm" class="mt-5 space-y-3">
+        <label class="block">
+          <span class="mb-2 block text-sm font-bold text-zinc-200">Access Code</span>
+          <input
+            id="accessCodeInput"
+            type="password"
+            autocomplete="off"
+            class="w-full rounded-md border border-neon/50 bg-gymCard px-4 py-3 text-base font-semibold text-white outline-none transition placeholder:text-zinc-500 focus:border-neon focus:ring-2 focus:ring-neon/30"
+            placeholder="Enter code"
+          />
+        </label>
+        <button
+          type="submit"
+          class="w-full rounded-md border border-neon bg-neon px-4 py-3 text-sm font-black uppercase tracking-[0.18em] text-black transition hover:bg-neonYellow"
+        >
+          Unlock App
+        </button>
+        <p id="accessError" class="hidden rounded-md border border-red-500/40 bg-red-500/10 px-3 py-2 text-sm font-bold text-red-300">
+          Wrong code. Please try again.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <main id="appContent" class="mx-auto min-h-screen w-full max-w-6xl flex-col px-4 py-5 sm:px-6 lg:px-8">
+    <header class="mb-6 rounded-lg border border-white/10 glass-panel px-5 py-6 text-left shadow-neon sm:px-8 sm:py-8">
+      <div class="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+        <div class="max-w-4xl">
+          <p class="text-xs font-black uppercase tracking-[0.28em] text-neon">Fitness Science Project</p>
+          <h1 class="hero-title mt-4 font-black text-white">
+            Gym Exercise Form Guide FOR BESTI
+          </h1>
+          <p class="mt-4 max-w-3xl text-sm leading-7 text-zinc-300 sm:text-base">
+            Select a muscle group, choose an exercise, and instantly view setup, execution, breathing cues, and crucial form tips.
+          </p>
+        </div>
+        <div class="grid max-w-sm grid-cols-3 gap-2 text-center lg:min-w-80">
+          <div class="rounded-md border border-white/10 bg-white/5 px-3 py-3">
+            <p class="text-lg font-black text-neon">186</p>
+            <p class="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-400">Exercises</p>
+          </div>
+          <div class="rounded-md border border-white/10 bg-white/5 px-3 py-3">
+            <p class="text-lg font-black text-neon">9</p>
+            <p class="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-400">Groups</p>
+          </div>
+          <div class="rounded-md border border-white/10 bg-white/5 px-3 py-3">
+            <p class="text-lg font-black text-neon">3</p>
+            <p class="mt-1 text-[10px] font-bold uppercase tracking-[0.16em] text-zinc-400">Cues</p>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="grid gap-4 rounded-lg border border-white/10 glass-panel p-4 shadow-xl sm:grid-cols-2">
+      <label class="block">
+        <span class="mb-2 block text-sm font-bold text-zinc-200">Muscle Group Selector</span>
+        <select
+          id="muscleSelect"
+          class="w-full appearance-none rounded-md border border-neon/50 bg-gymCard px-4 py-3 pr-10 text-base font-semibold text-white outline-none transition focus:border-neon focus:ring-2 focus:ring-neon/30"
+        ></select>
+      </label>
+
+      <label class="block">
+        <span class="mb-2 block text-sm font-bold text-zinc-200">Exercise Selector</span>
+        <select
+          id="exerciseSelect"
+          class="w-full appearance-none rounded-md border border-neon/50 bg-gymCard px-4 py-3 pr-10 text-base font-semibold text-white outline-none transition focus:border-neon focus:ring-2 focus:ring-neon/30"
+        ></select>
+      </label>
+    </section>
+
+    <section id="exerciseCard" class="mt-5 overflow-hidden rounded-lg border border-white/10 glass-panel shadow-2xl">
+      <div class="border-b border-white/10 bg-gradient-to-r from-neon/15 via-transparent to-neonYellow/10 p-5">
+        <p id="muscleBadge" class="mb-2 inline-flex rounded-md border border-neon/40 bg-neon/10 px-3 py-1 text-xs font-black uppercase tracking-[0.2em] text-neon"></p>
+        <h2 id="exerciseTitle" class="text-3xl font-black tracking-tight text-neon sm:text-5xl"></h2>
+        <div class="mt-3 flex flex-wrap gap-2 text-sm">
+          <span id="targetText" class="rounded-md bg-white/10 px-3 py-1 font-semibold text-zinc-200"></span>
+          <span id="difficultyText" class="rounded-md bg-neonYellow/15 px-3 py-1 font-bold text-neonYellow"></span>
+        </div>
+      </div>
+
+      <div class="grid gap-5 p-5 lg:grid-cols-[1.05fr_0.95fr]">
+        <figure class="overflow-hidden rounded-lg border border-neon/30 bg-black">
+          <div class="visual-frame relative aspect-[3/2] w-full">
+            <div id="exerciseVisual" class="h-full w-full"></div>
+            <div class="absolute inset-0 flex items-end bg-gradient-to-t from-black/90 via-black/20 to-transparent p-4">
+              <figcaption id="imageCaption" class="rounded-md border border-neon/40 bg-black/75 px-3 py-2 text-sm font-black uppercase tracking-[0.16em] text-neon"></figcaption>
+            </div>
+          </div>
+        </figure>
+
+        <div class="grid gap-4">
+          <article class="rounded-lg border border-white/10 bg-gymCard p-4">
+            <h3 class="mb-3 text-xl font-black text-neon">Setup</h3>
+            <ul id="setupList" class="space-y-2 text-sm leading-6 text-zinc-200"></ul>
+          </article>
+
+          <article class="rounded-lg border border-white/10 bg-gymCard p-4">
+            <h3 class="mb-3 text-xl font-black text-neon">Execution</h3>
+            <ul id="executionList" class="space-y-2 text-sm leading-6 text-zinc-200"></ul>
+          </article>
+
+          <article class="rounded-lg border border-white/10 bg-gymCard p-4">
+            <h3 class="mb-3 text-xl font-black text-neon">Crucial Form Tips</h3>
+            <ul id="tipsList" class="space-y-2 text-sm leading-6 text-zinc-200"></ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const ACCESS_CODE = "BESTI2026";
+    const accessGate = document.getElementById("accessGate");
+    const appContent = document.getElementById("appContent");
+    const accessForm = document.getElementById("accessForm");
+    const accessCodeInput = document.getElementById("accessCodeInput");
+    const accessError = document.getElementById("accessError");
+
+    function unlockApp() {
+      accessGate.style.display = "none";
+      appContent.classList.add("unlocked");
+    }
+
+    if (localStorage.getItem("gymGuideAccess") === ACCESS_CODE) {
+      unlockApp();
+    }
+
+    accessForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const enteredCode = accessCodeInput.value.trim();
+
+      if (enteredCode === ACCESS_CODE) {
+        localStorage.setItem("gymGuideAccess", ACCESS_CODE);
+        accessError.classList.add("hidden");
+        unlockApp();
+        return;
+      }
+
+      accessError.classList.remove("hidden");
+      accessCodeInput.value = "";
+      accessCodeInput.focus();
+    });
+
+    const exerciseData = {
+      CHEST: [
+        {
+          name: "Bench Press",
+          difficulty: "Intermediate",
+          setup: [
+            "Lie flat on the bench with eyes directly under the bar and feet planted firmly on the floor.",
+            "Grip the bar slightly wider than shoulder width, wrapping thumbs fully around the bar.",
+            "Pull shoulder blades back and down, create a small natural arch, and keep glutes on the bench."
+          ],
+          execution: [
+            "Unrack the bar with locked elbows and position it over the mid-chest.",
+            "Inhale and lower the bar under control until it lightly touches the lower chest or sternum area.",
+            "Drive the bar upward while exhaling, pressing slightly back toward the rack until elbows are locked."
+          ],
+          tips: [
+            "Do not flare elbows straight out; keep them angled about 45 to 75 degrees from the torso.",
+            "Avoid bouncing the bar off the chest or lifting the hips off the bench.",
+            "Keep wrists stacked over elbows and maintain full-body tension throughout every rep."
+          ]
+        },
+        {
+          name: "Incline Dumbbell Press",
+          difficulty: "Intermediate",
+          setup: [
+            "Set the bench to a 30 to 45 degree incline to bias the upper chest without overloading the shoulders.",
+            "Sit with dumbbells resting on thighs, then kick them up as you lie back.",
+            "Plant feet, brace core, and set shoulder blades back against the bench."
+          ],
+          execution: [
+            "Start with dumbbells beside the upper chest, palms facing forward or slightly inward.",
+            "Press the dumbbells up and slightly together while exhaling, stopping before they collide.",
+            "Inhale as you lower with control until elbows are just below chest level."
+          ],
+          tips: [
+            "Do not let the elbows drift too far behind the body at the bottom.",
+            "Keep forearms vertical and wrists neutral instead of bending them backward.",
+            "Avoid turning the movement into a shoulder press by setting the bench too steep."
+          ]
+        },
+        {
+          name: "Cable Crossover",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Set cable pulleys high, mid, or low depending on the chest fibers you want to emphasize.",
+            "Stand centered between the stacks with one foot slightly forward for balance.",
+            "Hold handles with a soft elbow bend and keep chest lifted."
+          ],
+          execution: [
+            "Exhale and sweep the arms together in a wide arc until hands meet in front of the chest.",
+            "Squeeze the chest briefly without shrugging or rounding the shoulders.",
+            "Inhale and return slowly until you feel a controlled chest stretch."
+          ],
+          tips: [
+            "Do not turn it into a press; keep the elbow angle mostly fixed.",
+            "Avoid letting the weights slam back into the stack.",
+            "Keep ribs down and torso stable instead of leaning excessively."
+          ]
+        },
+        {
+          name: "Push-ups",
+          difficulty: "Beginner",
+          setup: [
+            "Place hands slightly wider than shoulder width with fingers spread and palms flat.",
+            "Extend legs back and form a straight line from head to heels.",
+            "Brace abs, squeeze glutes, and keep neck neutral."
+          ],
+          execution: [
+            "Inhale as you lower the chest toward the floor with elbows tracking diagonally back.",
+            "Pause briefly near the bottom while maintaining body tension.",
+            "Exhale and push the floor away until arms are straight."
+          ],
+          tips: [
+            "Do not let hips sag or pike upward during the rep.",
+            "Avoid flaring elbows directly out to the sides.",
+            "Scale with elevated hands or knees if you cannot keep a rigid plank."
+          ]
+        },
+        {
+          name: "Dumbbell Fly",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Lie on a flat bench with dumbbells held above the chest and palms facing each other.",
+            "Plant feet firmly and pull shoulder blades back into the bench.",
+            "Keep a soft bend in the elbows and brace your core before lowering."
+          ],
+          execution: [
+            "Inhale and open the arms in a wide arc until you feel a controlled chest stretch.",
+            "Keep the elbow angle fixed instead of turning the movement into a press.",
+            "Exhale and bring the dumbbells back together above the chest."
+          ],
+          tips: [
+            "Do not lower beyond a comfortable shoulder range.",
+            "Avoid clanging the dumbbells together at the top.",
+            "Use light to moderate weight because this exercise loads the shoulder joint strongly."
+          ]
+        },
+        {
+          name: "Chest Dips",
+          difficulty: "Intermediate",
+          setup: [
+            "Grip parallel bars and support your body with arms straight.",
+            "Lean your torso slightly forward and keep legs crossed or bent behind you.",
+            "Depress shoulders away from ears before starting the rep."
+          ],
+          execution: [
+            "Inhale and lower until elbows bend deeply and chest feels stretched.",
+            "Keep elbows tracking back at a controlled angle.",
+            "Exhale and press yourself up until arms are straight without shrugging."
+          ],
+          tips: [
+            "Do not drop too low if shoulders feel pinched.",
+            "Avoid staying perfectly upright if your goal is chest emphasis.",
+            "Control the bottom position instead of bouncing out of it."
+          ]
+        }
+      ],
+      BACK: [
+        {
+          name: "Deadlift",
+          difficulty: "Advanced",
+          setup: [
+            "Stand with mid-foot under the bar, feet about hip width, and toes slightly turned out.",
+            "Hinge down, grip the bar just outside the legs, and bring shins lightly to the bar.",
+            "Brace hard, pull chest up, set lats by squeezing armpits tight, and keep spine neutral."
+          ],
+          execution: [
+            "Push the floor away and extend knees and hips together while the bar stays close.",
+            "Exhale near the top after passing the hardest portion, standing tall without leaning back.",
+            "Hinge hips back first, then bend knees once the bar passes them on the way down."
+          ],
+          tips: [
+            "Do not round the lower back or yank the bar from a loose setup.",
+            "Keep the bar close enough to brush the legs throughout the lift.",
+            "Avoid hyperextending at lockout; finish tall with ribs stacked over pelvis."
+          ]
+        },
+        {
+          name: "Lat Pulldown",
+          difficulty: "Beginner",
+          setup: [
+            "Adjust thigh pads so your legs are secure and feet stay flat.",
+            "Grip the bar slightly wider than shoulder width with shoulders relaxed away from ears.",
+            "Sit tall with a slight lean back and brace your core."
+          ],
+          execution: [
+            "Exhale and pull elbows down toward your ribs, bringing the bar to upper chest level.",
+            "Pause and squeeze the lats without collapsing the chest.",
+            "Inhale as you return the bar slowly until arms are extended and lats stretch."
+          ],
+          tips: [
+            "Do not pull the bar behind the neck.",
+            "Avoid using momentum by swinging the torso backward.",
+            "Start each rep by depressing the shoulder blades, not by curling with the arms."
+          ]
+        },
+        {
+          name: "Bent-over Barbell Row",
+          difficulty: "Intermediate",
+          setup: [
+            "Stand hip width with the bar in hand and hinge until torso is roughly 30 to 45 degrees above parallel.",
+            "Keep knees softly bent, spine neutral, and core braced.",
+            "Grip the bar just wider than shoulder width with arms hanging straight."
+          ],
+          execution: [
+            "Exhale and row the bar toward the lower ribs or upper abdomen.",
+            "Drive elbows back while keeping shoulders away from ears.",
+            "Inhale as you lower the bar under control until arms are fully extended."
+          ],
+          tips: [
+            "Do not round your back or stand up during each rep.",
+            "Avoid bouncing the bar with hip momentum.",
+            "Keep your gaze slightly ahead on the floor to maintain a neutral neck."
+          ]
+        },
+        {
+          name: "Seated Cable Row",
+          difficulty: "Beginner",
+          setup: [
+            "Sit with feet braced, knees slightly bent, and handle held with arms extended.",
+            "Stack ribs over hips and keep the chest proud.",
+            "Let shoulder blades protract slightly at the start without rounding the lower back."
+          ],
+          execution: [
+            "Exhale and pull the handle toward the lower ribs.",
+            "Squeeze shoulder blades together while elbows travel close to the body.",
+            "Inhale and return slowly, allowing the back to stretch while posture stays controlled."
+          ],
+          tips: [
+            "Do not lean far backward to finish the pull.",
+            "Avoid shrugging the shoulders toward the ears.",
+            "Keep wrists neutral and do not turn the movement into a biceps curl."
+          ]
+        },
+        {
+          name: "Pull-ups",
+          difficulty: "Intermediate to Advanced",
+          setup: [
+            "Grip the pull-up bar slightly wider than shoulder width with palms facing away.",
+            "Start from a dead hang with shoulders active and ribs pulled down.",
+            "Cross feet lightly or keep legs straight while bracing the abs."
+          ],
+          execution: [
+            "Exhale and pull elbows down toward your ribs as your chest moves toward the bar.",
+            "Pause briefly near the top without craning your neck.",
+            "Inhale and lower under control until arms are extended."
+          ],
+          tips: [
+            "Do not kick or swing to gain momentum.",
+            "Avoid stopping halfway down; use full controlled range.",
+            "Use assisted pull-ups or bands if full reps break form."
+          ]
+        },
+        {
+          name: "Single-arm Dumbbell Row",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Place one hand and knee on a bench with the opposite foot planted on the floor.",
+            "Hold a dumbbell under the shoulder with your spine neutral.",
+            "Square hips and shoulders toward the floor before pulling."
+          ],
+          execution: [
+            "Exhale and row the dumbbell toward the hip, keeping elbow close to the body.",
+            "Squeeze the lat at the top without twisting the torso open.",
+            "Inhale and lower slowly until the arm is extended."
+          ],
+          tips: [
+            "Do not rotate your trunk to lift heavier weight.",
+            "Avoid shrugging the working shoulder toward your ear.",
+            "Pull toward the hip for lat focus, not straight up toward the chest."
+          ]
+        }
+      ],
+      SHOULDERS: [
+        {
+          name: "Overhead Barbell Press",
+          difficulty: "Intermediate",
+          setup: [
+            "Stand with feet about hip width and the bar resting on the upper chest/front shoulders.",
+            "Grip slightly wider than shoulder width with wrists stacked over elbows.",
+            "Brace glutes and abs, keeping ribs down."
+          ],
+          execution: [
+            "Press the bar upward while moving your head slightly back to clear the path.",
+            "Exhale through the sticking point and finish with biceps near ears.",
+            "Lower under control to the upper chest while inhaling and resetting the brace."
+          ],
+          tips: [
+            "Do not lean backward into a standing incline press.",
+            "Avoid pressing the bar forward; keep it close to the face and over mid-foot.",
+            "Keep glutes tight to protect the lower back."
+          ]
+        },
+        {
+          name: "Dumbbell Lateral Raise",
+          difficulty: "Beginner",
+          setup: [
+            "Stand tall with dumbbells at your sides and a slight bend in the elbows.",
+            "Brace your core and keep shoulders relaxed.",
+            "Lean forward very slightly to align the side delts."
+          ],
+          execution: [
+            "Exhale and raise the dumbbells out to the sides until arms reach shoulder height.",
+            "Lead with elbows and keep palms angled slightly downward or neutral.",
+            "Inhale and lower slowly without letting the weights crash into your sides."
+          ],
+          tips: [
+            "Do not swing the dumbbells with your hips.",
+            "Avoid shrugging at the top; the neck should stay relaxed.",
+            "Use lighter weight if you cannot control the lowering phase."
+          ]
+        },
+        {
+          name: "Face Pulls",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Set a rope attachment around upper chest or face height.",
+            "Grip the rope with thumbs pointing backward and step away to create tension.",
+            "Stand tall with ribs down and knees slightly soft."
+          ],
+          execution: [
+            "Exhale and pull the rope toward the face while separating the ends.",
+            "Drive elbows high and externally rotate so hands finish near ears.",
+            "Inhale and return slowly until arms are extended."
+          ],
+          tips: [
+            "Do not turn the movement into a low row.",
+            "Avoid arching your lower back to complete the pull.",
+            "Keep the movement controlled and prioritize rear delts and upper back."
+          ]
+        },
+        {
+          name: "Arnold Press",
+          difficulty: "Intermediate",
+          setup: [
+            "Sit or stand tall with dumbbells in front of shoulders, palms facing you.",
+            "Brace your core and keep elbows slightly in front of the torso.",
+            "Set shoulder blades down without over-arching the lower back."
+          ],
+          execution: [
+            "Exhale and press upward while rotating palms forward.",
+            "Finish with dumbbells overhead and biceps near ears.",
+            "Inhale and reverse the motion slowly back to the starting position."
+          ],
+          tips: [
+            "Do not rush the rotation or let wrists collapse.",
+            "Avoid leaning backward to finish the press.",
+            "Use a lighter load than standard shoulder presses."
+          ]
+        },
+        {
+          name: "Rear Delt Fly",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Hinge forward with dumbbells hanging under the shoulders.",
+            "Keep knees soft, spine neutral, and chest angled toward the floor.",
+            "Use a slight bend in the elbows and keep neck relaxed."
+          ],
+          execution: [
+            "Exhale and raise arms out to the sides until elbows reach shoulder height.",
+            "Squeeze rear delts and upper back without shrugging.",
+            "Inhale and lower slowly to the starting position."
+          ],
+          tips: [
+            "Do not swing the dumbbells with your hips.",
+            "Avoid pulling the weights too far behind the body.",
+            "Keep the load light enough to feel the rear delts working."
+          ]
+        }
+      ],
+      BICEPS: [
+        {
+          name: "Barbell Curl",
+          difficulty: "Beginner",
+          setup: [
+            "Stand with feet hip width and hold the bar with an underhand shoulder-width grip.",
+            "Keep elbows close to the torso and shoulders set down.",
+            "Brace your abs and keep wrists straight."
+          ],
+          execution: [
+            "Exhale and curl the bar upward by bending the elbows.",
+            "Squeeze biceps at the top without letting elbows drift far forward.",
+            "Inhale and lower slowly until arms are fully extended."
+          ],
+          tips: [
+            "Do not swing your hips or lean back to lift the weight.",
+            "Avoid bending wrists backward at the top.",
+            "Keep the eccentric slow to build control and tension."
+          ]
+        },
+        {
+          name: "Hammer Curl",
+          difficulty: "Beginner",
+          setup: [
+            "Stand tall with dumbbells at your sides and palms facing inward.",
+            "Keep elbows pinned near the ribs.",
+            "Brace your core and keep shoulders relaxed."
+          ],
+          execution: [
+            "Exhale and curl both dumbbells upward while maintaining a neutral grip.",
+            "Pause when forearms approach vertical and biceps are contracted.",
+            "Inhale and lower under control to full extension."
+          ],
+          tips: [
+            "Do not rotate the wrists into a regular curl.",
+            "Avoid letting elbows swing forward.",
+            "Use a weight that allows full range without torso momentum."
+          ]
+        },
+        {
+          name: "Incline Dumbbell Curl",
+          difficulty: "Intermediate",
+          setup: [
+            "Set an incline bench around 45 to 60 degrees.",
+            "Sit back with dumbbells hanging at your sides and palms forward.",
+            "Keep shoulders pinned to the bench and chest open."
+          ],
+          execution: [
+            "Exhale and curl the dumbbells while keeping upper arms mostly still.",
+            "Squeeze at the top without lifting shoulders off the bench.",
+            "Inhale and lower slowly until biceps are stretched."
+          ],
+          tips: [
+            "Do not shorten the bottom range; the stretch is part of the exercise.",
+            "Avoid flaring elbows outward.",
+            "Choose lighter weight than standing curls to protect the shoulder position."
+          ]
+        },
+        {
+          name: "Preacher Curl",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Sit at a preacher bench with upper arms supported on the pad.",
+            "Grip an EZ bar or dumbbells with palms up.",
+            "Keep chest against the pad and shoulders relaxed."
+          ],
+          execution: [
+            "Exhale and curl the weight upward while upper arms stay fixed.",
+            "Squeeze the biceps at the top without lifting elbows off the pad.",
+            "Inhale and lower slowly until elbows are nearly straight."
+          ],
+          tips: [
+            "Do not bounce from the bottom position.",
+            "Avoid fully relaxing the elbows under heavy load.",
+            "Keep wrists straight and control the negative phase."
+          ]
+        },
+        {
+          name: "Concentration Curl",
+          difficulty: "Beginner",
+          setup: [
+            "Sit on a bench with legs apart and one elbow braced against the inner thigh.",
+            "Hold a dumbbell with palm facing up and shoulder relaxed.",
+            "Keep the torso still and eyes on the working arm."
+          ],
+          execution: [
+            "Exhale and curl the dumbbell toward the shoulder.",
+            "Pause briefly at the top while squeezing the biceps.",
+            "Inhale and lower slowly to full control."
+          ],
+          tips: [
+            "Do not swing the torso or shoulder.",
+            "Avoid letting the elbow slide down the thigh.",
+            "Use strict form instead of heavy weight."
+          ]
+        }
+      ],
+      TRICEPS: [
+        {
+          name: "Tricep Rope Pushdown",
+          difficulty: "Beginner",
+          setup: [
+            "Attach a rope to a high cable and stand close to the stack.",
+            "Grip the rope with elbows tucked beside the ribs.",
+            "Lean forward slightly with core braced and shoulders down."
+          ],
+          execution: [
+            "Exhale and press the rope downward until elbows are fully extended.",
+            "Separate the rope ends slightly at the bottom to emphasize contraction.",
+            "Inhale and return slowly until forearms rise without elbows drifting forward."
+          ],
+          tips: [
+            "Do not let elbows flare or move back and forth.",
+            "Avoid using bodyweight to push the rope down.",
+            "Keep wrists neutral and finish each rep with a firm triceps squeeze."
+          ]
+        },
+        {
+          name: "Overhead Dumbbell Extension",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Hold one dumbbell with both hands under the top plate.",
+            "Raise it overhead with elbows pointing forward and close to the head.",
+            "Stand or sit tall with ribs down and core braced."
+          ],
+          execution: [
+            "Inhale and lower the dumbbell behind your head by bending the elbows.",
+            "Feel a stretch in the long head of the triceps without forcing shoulder range.",
+            "Exhale and extend elbows to bring the dumbbell back overhead."
+          ],
+          tips: [
+            "Do not flare elbows wide throughout the movement.",
+            "Avoid arching the lower back as the dumbbell lowers.",
+            "Move slowly at the bottom to protect elbows and shoulders."
+          ]
+        },
+        {
+          name: "Skull Crushers",
+          difficulty: "Intermediate",
+          setup: [
+            "Lie on a flat bench holding an EZ bar or dumbbells above the shoulders.",
+            "Set shoulder blades back and keep feet planted.",
+            "Angle upper arms slightly back instead of perfectly vertical to keep triceps loaded."
+          ],
+          execution: [
+            "Inhale and bend elbows to lower the weight toward the forehead or just behind the head.",
+            "Keep upper arms stable as the elbows flex.",
+            "Exhale and extend elbows until arms are straight."
+          ],
+          tips: [
+            "Do not let elbows flare wide or drift excessively.",
+            "Avoid lowering too fast near the head.",
+            "Use an EZ bar if straight bars irritate your wrists."
+          ]
+        },
+        {
+          name: "Close-grip Bench Press",
+          difficulty: "Intermediate",
+          setup: [
+            "Lie on a flat bench with feet planted and shoulder blades retracted.",
+            "Grip the bar around shoulder width, narrower than your normal bench press.",
+            "Keep wrists stacked and elbows close to the body."
+          ],
+          execution: [
+            "Inhale and lower the bar toward the lower chest with control.",
+            "Keep elbows tucked as the bar descends.",
+            "Exhale and press up until elbows are locked without losing shoulder position."
+          ],
+          tips: [
+            "Do not grip so narrow that wrists hurt.",
+            "Avoid flaring elbows like a wide bench press.",
+            "Keep the bar path controlled and close to the torso."
+          ]
+        },
+        {
+          name: "Bench Dips",
+          difficulty: "Beginner",
+          setup: [
+            "Sit on a bench with hands beside hips and fingers gripping the edge.",
+            "Walk feet forward and keep hips close to the bench.",
+            "Keep chest lifted and shoulders down."
+          ],
+          execution: [
+            "Inhale and bend elbows to lower your body.",
+            "Stop when shoulders feel comfortable and elbows are bent.",
+            "Exhale and press through the palms to return to the top."
+          ],
+          tips: [
+            "Do not let shoulders roll forward at the bottom.",
+            "Avoid drifting hips far away from the bench.",
+            "Bend knees to make it easier or straighten legs to make it harder."
+          ]
+        }
+      ],
+      LEGS: [
+        {
+          name: "Barbell Squat",
+          difficulty: "Intermediate",
+          setup: [
+            "Place the bar across upper traps for high bar or rear delts for low bar.",
+            "Stand with feet about shoulder width and toes slightly turned out.",
+            "Brace your core, pull elbows into a stable position, and keep chest proud."
+          ],
+          execution: [
+            "Inhale and descend by bending hips and knees together.",
+            "Squat until thighs reach at least parallel if mobility allows.",
+            "Drive through mid-foot, exhale through the ascent, and stand tall."
+          ],
+          tips: [
+            "Do not let knees collapse inward.",
+            "Avoid losing a neutral spine at the bottom.",
+            "Keep the bar balanced over the mid-foot throughout the lift."
+          ]
+        },
+        {
+          name: "Romanian Deadlift",
+          difficulty: "Intermediate",
+          setup: [
+            "Stand with feet hip width and hold a barbell or dumbbells in front of thighs.",
+            "Keep knees slightly bent, shoulders packed, and spine neutral.",
+            "Brace your core before initiating the hinge."
+          ],
+          execution: [
+            "Inhale and push hips back while the weight slides close to the legs.",
+            "Lower until you feel a strong hamstring stretch without rounding the back.",
+            "Exhale and drive hips forward to stand tall, squeezing glutes at the top."
+          ],
+          tips: [
+            "Do not squat the weight down; this is a hip hinge.",
+            "Avoid reaching the weight away from your body.",
+            "Stop the descent when your pelvis can no longer tilt without spinal rounding."
+          ]
+        },
+        {
+          name: "Leg Press",
+          difficulty: "Beginner",
+          setup: [
+            "Sit with back and hips firmly against the pad.",
+            "Place feet shoulder width on the platform with toes slightly turned out.",
+            "Unlock the safety handles and keep knees aligned with toes."
+          ],
+          execution: [
+            "Inhale and lower the platform until knees bend deeply without hips lifting.",
+            "Drive through the whole foot while exhaling.",
+            "Stop just short of locking knees hard at the top."
+          ],
+          tips: [
+            "Do not let the lower back round off the seat.",
+            "Avoid collapsing knees inward.",
+            "Do not use a range of motion so short that the quads and glutes barely load."
+          ]
+        },
+        {
+          name: "Walking Lunges",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Stand tall with dumbbells at sides or bodyweight hands on hips.",
+            "Keep chest up, core braced, and eyes forward.",
+            "Choose a clear path with enough room for controlled steps."
+          ],
+          execution: [
+            "Step forward and lower until both knees bend to roughly 90 degrees.",
+            "Push through the front foot and bring the back leg forward into the next step.",
+            "Breathe steadily, exhaling as you drive up from each lunge."
+          ],
+          tips: [
+            "Do not slam the back knee into the floor.",
+            "Avoid letting the front knee cave inward.",
+            "Take long enough steps to load glutes without overstriding."
+          ]
+        },
+        {
+          name: "Leg Extension",
+          difficulty: "Beginner",
+          setup: [
+            "Sit on the machine with your back against the pad.",
+            "Adjust the ankle pad so it rests just above the ankles.",
+            "Grip handles and align knees with the machine pivot."
+          ],
+          execution: [
+            "Exhale and extend knees until legs are straight.",
+            "Squeeze the quads briefly at the top.",
+            "Inhale and lower slowly without letting the weight stack slam."
+          ],
+          tips: [
+            "Do not kick explosively through the rep.",
+            "Avoid lifting hips off the seat.",
+            "Use a controlled range if knees feel irritated."
+          ]
+        },
+        {
+          name: "Standing Calf Raise",
+          difficulty: "Beginner",
+          setup: [
+            "Stand with balls of feet on a raised edge or machine platform.",
+            "Keep knees mostly straight but not locked hard.",
+            "Hold support handles and keep torso tall."
+          ],
+          execution: [
+            "Exhale and rise onto the balls of your feet as high as possible.",
+            "Pause briefly at the top and squeeze the calves.",
+            "Inhale and lower heels slowly to a deep stretch."
+          ],
+          tips: [
+            "Do not bounce quickly through the bottom.",
+            "Avoid rolling ankles outward or inward.",
+            "Use full range instead of tiny partial reps."
+          ]
+        }
+      ],
+      ABS: [
+        {
+          name: "Hanging Leg Raise",
+          difficulty: "Intermediate to Advanced",
+          setup: [
+            "Hang from a pull-up bar with hands slightly wider than shoulders.",
+            "Set shoulders down away from ears and brace your core.",
+            "Keep legs together and minimize swinging before starting."
+          ],
+          execution: [
+            "Exhale and raise legs by curling the pelvis upward, not just flexing the hips.",
+            "Lift knees or straight legs toward the chest depending on strength.",
+            "Inhale and lower slowly to a dead-still hang."
+          ],
+          tips: [
+            "Do not use momentum or uncontrolled swinging.",
+            "Avoid arching the lower back at the bottom.",
+            "Start with bent knees if straight-leg raises break your form."
+          ]
+        },
+        {
+          name: "Ab Wheel Rollout",
+          difficulty: "Advanced",
+          setup: [
+            "Kneel on a pad with the ab wheel under shoulders.",
+            "Grip handles firmly and tuck ribs down toward the pelvis.",
+            "Squeeze glutes to prevent lower-back extension."
+          ],
+          execution: [
+            "Inhale and roll forward slowly while keeping hips and shoulders moving together.",
+            "Reach only as far as you can maintain a braced spine.",
+            "Exhale and pull back using abs and lats until the wheel returns under shoulders."
+          ],
+          tips: [
+            "Do not let the lower back sag.",
+            "Avoid sitting hips back first on the return.",
+            "Shorten the range if you cannot keep tension through the full rep."
+          ]
+        },
+        {
+          name: "Planks",
+          difficulty: "Beginner",
+          setup: [
+            "Place forearms on the floor with elbows under shoulders.",
+            "Extend legs back and set feet about hip width.",
+            "Create a straight line from head to heels with glutes lightly squeezed."
+          ],
+          execution: [
+            "Breathe slowly through the nose or controlled mouth breaths while maintaining tension.",
+            "Pull elbows gently toward toes to engage the abs harder.",
+            "Hold for the target time without changing body position."
+          ],
+          tips: [
+            "Do not let hips sag toward the floor.",
+            "Avoid holding your breath.",
+            "Stop the set when alignment breaks instead of chasing longer time."
+          ]
+        },
+        {
+          name: "Cable Crunch",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Attach a rope to a high cable and kneel facing the stack.",
+            "Hold the rope near the sides of your head.",
+            "Keep hips mostly fixed and brace before curling down."
+          ],
+          execution: [
+            "Exhale and crunch by bringing ribs toward the pelvis.",
+            "Pause at the bottom while squeezing the abs.",
+            "Inhale and return slowly without letting the hips rock back."
+          ],
+          tips: [
+            "Do not pull with the arms.",
+            "Avoid turning it into a hip hinge.",
+            "Keep the movement focused on spinal flexion through the abs."
+          ]
+        },
+        {
+          name: "Russian Twists",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Sit on the floor with knees bent and torso leaned back slightly.",
+            "Hold a plate, dumbbell, or your hands together in front of the chest.",
+            "Brace the core and lift feet only if you can keep balance."
+          ],
+          execution: [
+            "Rotate the torso to one side while keeping the chest tall.",
+            "Move through the center and rotate to the other side.",
+            "Breathe steadily and keep the motion controlled."
+          ],
+          tips: [
+            "Do not swing the weight with only your arms.",
+            "Avoid rounding the lower back.",
+            "Use bodyweight first if weighted twists reduce control."
+          ]
+        },
+        {
+          name: "Crunches",
+          difficulty: "Beginner",
+          setup: [
+            "Lie on your back with knees bent and feet flat on the floor.",
+            "Place fingertips lightly behind the ears or cross arms over the chest.",
+            "Keep lower back gently pressed toward the floor and neck neutral."
+          ],
+          execution: [
+            "Exhale and curl the upper back off the floor by bringing ribs toward the pelvis.",
+            "Pause briefly at the top while squeezing the abs.",
+            "Inhale and lower slowly until shoulder blades return to the floor."
+          ],
+          tips: [
+            "Do not pull the neck with your hands.",
+            "Avoid using momentum to bounce up and down.",
+            "Keep the movement small and focused on abdominal contraction."
+          ]
+        },
+        {
+          name: "Lying Leg Raises",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Lie flat on your back with legs straight and hands under hips or beside the body.",
+            "Press the lower back toward the floor and brace the core.",
+            "Keep legs together and toes pointed slightly upward."
+          ],
+          execution: [
+            "Exhale and raise both legs until they point toward the ceiling.",
+            "Inhale and lower slowly toward the floor without letting the back arch.",
+            "Stop just before the heels touch the floor, then repeat."
+          ],
+          tips: [
+            "Do not let the lower back lift from the floor.",
+            "Bend the knees if straight legs are too difficult.",
+            "Move slowly to keep tension on the lower abs and hip flexors."
+          ]
+        },
+        {
+          name: "Reverse Crunch",
+          difficulty: "Beginner",
+          setup: [
+            "Lie on your back with knees bent at 90 degrees and feet lifted.",
+            "Place arms on the floor beside you for balance.",
+            "Brace your abs and keep your head relaxed."
+          ],
+          execution: [
+            "Exhale and curl your pelvis off the floor, bringing knees toward the chest.",
+            "Pause briefly when the lower abs are fully contracted.",
+            "Inhale and lower hips back down with control."
+          ],
+          tips: [
+            "Do not swing the legs to create momentum.",
+            "Avoid pushing hard with the hands.",
+            "Think about lifting the hips, not just moving the knees."
+          ]
+        },
+        {
+          name: "Bicycle Crunch",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Lie on your back with hands lightly behind the head.",
+            "Lift knees to tabletop position and raise shoulder blades off the floor.",
+            "Brace your core before rotating."
+          ],
+          execution: [
+            "Exhale and rotate one shoulder toward the opposite knee while extending the other leg.",
+            "Switch sides smoothly, keeping shoulder blades elevated.",
+            "Breathe steadily and control each rotation."
+          ],
+          tips: [
+            "Do not yank the neck forward.",
+            "Avoid pedaling too fast with no abdominal control.",
+            "Rotate through the torso instead of only moving elbows."
+          ]
+        },
+        {
+          name: "Mountain Climbers",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Start in a high plank with hands under shoulders.",
+            "Keep body in a straight line from head to heels.",
+            "Brace abs and keep shoulders stacked over wrists."
+          ],
+          execution: [
+            "Drive one knee toward the chest while keeping hips stable.",
+            "Return that foot and switch legs in a controlled rhythm.",
+            "Breathe steadily while maintaining plank tension."
+          ],
+          tips: [
+            "Do not let hips bounce high or sag low.",
+            "Avoid placing hands too far forward.",
+            "Slow down if your spine position starts to break."
+          ]
+        },
+        {
+          name: "Flutter Kicks",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Lie on your back with legs straight and hands under hips if needed.",
+            "Press lower back toward the floor and lift heels a few inches.",
+            "Keep head relaxed or slightly raised if comfortable."
+          ],
+          execution: [
+            "Move legs up and down in small alternating kicks.",
+            "Breathe continuously and keep the core braced.",
+            "Maintain a steady tempo for the target time."
+          ],
+          tips: [
+            "Do not let the lower back arch.",
+            "Keep kicks small instead of swinging the whole leg wildly.",
+            "Raise the legs higher if the lower back feels strained."
+          ]
+        },
+        {
+          name: "Heel Touches",
+          difficulty: "Beginner",
+          setup: [
+            "Lie on your back with knees bent and feet flat near the hips.",
+            "Lift shoulder blades slightly from the floor.",
+            "Keep arms extended beside the body."
+          ],
+          execution: [
+            "Exhale and bend sideways to touch one heel with the same-side hand.",
+            "Return through center and reach toward the other heel.",
+            "Keep alternating sides with controlled breathing."
+          ],
+          tips: [
+            "Do not flatten back down between reps.",
+            "Avoid rushing the side bend.",
+            "Keep the rib cage pulled down to maintain ab tension."
+          ]
+        },
+        {
+          name: "Sit-ups",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Lie on your back with knees bent and feet anchored or flat on the floor.",
+            "Cross arms over chest or keep hands beside the head without pulling.",
+            "Brace your abs before lifting."
+          ],
+          execution: [
+            "Exhale and curl up until your torso reaches a seated position.",
+            "Control the top position without collapsing forward.",
+            "Inhale and lower slowly back to the floor."
+          ],
+          tips: [
+            "Do not throw the arms forward for momentum.",
+            "Avoid rounding aggressively if your lower back feels irritated.",
+            "Use crunches instead if full sit-ups strain the hip flexors."
+          ]
+        },
+        {
+          name: "Side Plank",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Lie on one side with elbow under shoulder and legs stacked.",
+            "Brace your core and lift hips off the floor.",
+            "Create a straight line from head to feet."
+          ],
+          execution: [
+            "Hold the position while breathing steadily.",
+            "Keep hips lifted and ribs stacked over the pelvis.",
+            "Switch sides after the target time."
+          ],
+          tips: [
+            "Do not let the hips rotate forward or backward.",
+            "Avoid shrugging the shoulder into the ear.",
+            "Bend the lower knee for an easier variation."
+          ]
+        },
+        {
+          name: "V-ups",
+          difficulty: "Intermediate",
+          setup: [
+            "Lie flat with arms extended overhead and legs straight.",
+            "Brace the core and keep lower back controlled.",
+            "Start with a long body position without relaxing completely."
+          ],
+          execution: [
+            "Exhale and lift arms and legs together into a V shape.",
+            "Reach hands toward toes while balancing briefly on the hips.",
+            "Inhale and lower slowly back to the starting position."
+          ],
+          tips: [
+            "Do not swing arms violently for momentum.",
+            "Avoid letting the lower back slam into the floor.",
+            "Bend knees slightly if straight-leg V-ups are too difficult."
+          ]
+        }
+      ],
+      TRAPS: [
+        {
+          name: "Barbell Shrugs",
+          difficulty: "Beginner",
+          setup: [
+            "Stand tall holding a barbell in front of thighs with hands slightly wider than hips.",
+            "Keep feet hip width, core braced, and arms straight.",
+            "Set your gaze forward with neck neutral."
+          ],
+          execution: [
+            "Exhale and elevate shoulders straight up toward the ears.",
+            "Pause briefly at the top and squeeze the traps.",
+            "Inhale and lower shoulders slowly to a full stretch."
+          ],
+          tips: [
+            "Do not roll the shoulders in circles.",
+            "Avoid bending elbows to turn it into an upright row.",
+            "Use controlled reps instead of bouncing heavy weight."
+          ]
+        },
+        {
+          name: "Dumbbell Shrugs",
+          difficulty: "Beginner",
+          setup: [
+            "Hold dumbbells at your sides with palms facing inward.",
+            "Stand tall with feet hip width and core tight.",
+            "Let arms hang long while keeping shoulders relaxed before the first rep."
+          ],
+          execution: [
+            "Exhale and shrug shoulders straight upward.",
+            "Hold the top position briefly while keeping the neck neutral.",
+            "Inhale and lower slowly until traps are stretched."
+          ],
+          tips: [
+            "Do not jut the head forward during the shrug.",
+            "Avoid rotating the shoulders.",
+            "Keep dumbbells close to the body and maintain a steady tempo."
+          ]
+        },
+        {
+          name: "Farmer's Carry",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Hold heavy dumbbells or kettlebells at your sides.",
+            "Stand tall with shoulders down, chest up, and core braced.",
+            "Keep wrists neutral and grip the handles firmly."
+          ],
+          execution: [
+            "Walk forward with short, controlled steps.",
+            "Breathe steadily while maintaining tall posture.",
+            "Set the weights down safely by hinging at the hips and bending the knees."
+          ],
+          tips: [
+            "Do not lean side to side as you walk.",
+            "Avoid shrugging shoulders up toward the ears.",
+            "Stop before grip failure makes the weights drop unexpectedly."
+          ]
+        },
+        {
+          name: "Trap Bar Carry",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Stand inside a trap bar and grip the handles evenly.",
+            "Brace your core, keep chest tall, and set shoulders down.",
+            "Stand up with the bar using a controlled deadlift motion."
+          ],
+          execution: [
+            "Walk forward with short, controlled steps.",
+            "Keep shoulders level and neck neutral.",
+            "Set the bar down by hinging and bending knees under control."
+          ],
+          tips: [
+            "Do not lean side to side while walking.",
+            "Avoid shrugging the shoulders up to your ears.",
+            "Stop before grip fatigue makes posture collapse."
+          ]
+        }
+      ],
+      "SHOULDER STABILITY & MOBILITY": [
+        {
+          name: "Band External Rotation",
+          difficulty: "Beginner",
+          setup: [
+            "Attach a light resistance band at elbow height.",
+            "Stand side-on with the working elbow bent to 90 degrees and tucked beside the ribs.",
+            "Keep shoulder down, wrist straight, and core gently braced."
+          ],
+          execution: [
+            "Exhale and rotate the forearm away from the body while the elbow stays pinned.",
+            "Pause briefly when you feel the back of the shoulder working.",
+            "Inhale and return slowly to the starting position."
+          ],
+          tips: [
+            "Do not twist your torso to move the band.",
+            "Avoid using a heavy band that forces your elbow away from your side.",
+            "Keep the movement slow and pain-free."
+          ]
+        },
+        {
+          name: "Band Internal Rotation",
+          difficulty: "Beginner",
+          setup: [
+            "Attach a light band at elbow height and stand side-on to the anchor.",
+            "Hold the band with the elbow bent to 90 degrees and tucked beside the ribs.",
+            "Keep the shoulder relaxed and ribs down."
+          ],
+          execution: [
+            "Exhale and rotate the forearm inward across the body.",
+            "Pause lightly when the shoulder feels engaged.",
+            "Inhale and return slowly without letting the band pull you open."
+          ],
+          tips: [
+            "Do not let the elbow drift away from your torso.",
+            "Avoid shrugging the shoulder during the pull.",
+            "Use very light resistance and focus on control."
+          ]
+        },
+        {
+          name: "Scapular Wall Slides",
+          difficulty: "Beginner",
+          setup: [
+            "Stand with back against a wall, feet slightly forward.",
+            "Place forearms on the wall in a goalpost position if comfortable.",
+            "Keep ribs down and chin gently tucked."
+          ],
+          execution: [
+            "Slide arms upward slowly while keeping shoulder blades controlled.",
+            "Move only as high as you can without arching your back.",
+            "Lower back to the start with steady breathing."
+          ],
+          tips: [
+            "Do not force your arms flat if mobility is limited.",
+            "Avoid flaring ribs to fake overhead range.",
+            "Keep the movement smooth and pain-free."
+          ]
+        },
+        {
+          name: "Scapular Push-ups",
+          difficulty: "Beginner",
+          setup: [
+            "Start in a high plank with hands under shoulders.",
+            "Keep elbows straight and body in one long line.",
+            "Brace abs and keep neck neutral."
+          ],
+          execution: [
+            "Let shoulder blades move together slightly as your chest sinks between the arms.",
+            "Push the floor away to spread the shoulder blades apart.",
+            "Repeat slowly without bending the elbows."
+          ],
+          tips: [
+            "Do not turn it into a regular push-up.",
+            "Avoid hips sagging or piking upward.",
+            "Perform from knees or against a wall if plank position is too hard."
+          ]
+        },
+        {
+          name: "Serratus Wall Slide",
+          difficulty: "Beginner",
+          setup: [
+            "Place forearms on a wall with elbows around shoulder height.",
+            "Keep a light band around wrists if you want extra activation.",
+            "Brace core and gently press forearms into the wall."
+          ],
+          execution: [
+            "Slide forearms upward while reaching the shoulder blades around the ribs.",
+            "Pause at the top without shrugging.",
+            "Lower slowly while keeping steady pressure into the wall."
+          ],
+          tips: [
+            "Do not let the lower back arch.",
+            "Avoid pinching the shoulder blades together.",
+            "Keep tension light and controlled."
+          ]
+        },
+        {
+          name: "Face Pull to External Rotation",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Set a rope cable or band at face height.",
+            "Hold the ends with palms facing each other.",
+            "Stand tall with ribs down and shoulders relaxed."
+          ],
+          execution: [
+            "Pull the rope toward your face with elbows high.",
+            "Rotate hands back so forearms finish nearly vertical.",
+            "Return slowly to the start with control."
+          ],
+          tips: [
+            "Do not lean backward to complete the rep.",
+            "Avoid shrugging at the top.",
+            "Use light resistance and prioritize shoulder control."
+          ]
+        },
+        {
+          name: "Prone Y Raise",
+          difficulty: "Beginner to Intermediate",
+          setup: [
+            "Lie face down on an incline bench or floor.",
+            "Extend arms overhead in a Y shape with thumbs pointing up.",
+            "Keep neck neutral and shoulder blades gently set."
+          ],
+          execution: [
+            "Exhale and lift the arms slightly off the floor or bench.",
+            "Pause briefly while feeling the lower traps and rear shoulders.",
+            "Inhale and lower slowly."
+          ],
+          tips: [
+            "Do not lift so high that the lower back arches.",
+            "Avoid shrugging toward the ears.",
+            "Use no weight or very light weight."
+          ]
+        },
+        {
+          name: "Prone T Raise",
+          difficulty: "Beginner",
+          setup: [
+            "Lie face down with arms extended out to the sides like a T.",
+            "Point thumbs upward and keep forehead supported if needed.",
+            "Keep the torso relaxed and core lightly braced."
+          ],
+          execution: [
+            "Exhale and lift arms by squeezing the shoulder blades gently.",
+            "Pause briefly at the top.",
+            "Inhale and lower slowly to the start."
+          ],
+          tips: [
+            "Do not jerk the arms upward.",
+            "Avoid shrugging the shoulders.",
+            "Keep the range small and controlled."
+          ]
+        },
+        {
+          name: "Banded Pull-aparts",
+          difficulty: "Beginner",
+          setup: [
+            "Hold a light band at chest height with arms straight.",
+            "Stand tall with ribs down and shoulders relaxed.",
+            "Use a grip width that creates mild band tension."
+          ],
+          execution: [
+            "Exhale and pull the band apart until hands move out to the sides.",
+            "Squeeze the upper back lightly without arching.",
+            "Inhale and return slowly."
+          ],
+          tips: [
+            "Do not shrug the shoulders.",
+            "Avoid bending elbows to make it easier.",
+            "Use smooth reps rather than snapping the band."
+          ]
+        },
+        {
+          name: "Shoulder CARs",
+          difficulty: "Beginner",
+          setup: [
+            "Stand tall with one arm straight at your side.",
+            "Brace your core and keep ribs down.",
+            "Move slowly through a pain-free range."
+          ],
+          execution: [
+            "Raise the arm forward and overhead as far as controlled.",
+            "Rotate the shoulder and continue the circle behind you.",
+            "Reverse the path slowly after each rep."
+          ],
+          tips: [
+            "Do not rush the circle.",
+            "Avoid twisting the torso to create extra range.",
+            "Keep the movement smooth and controlled."
+          ]
+        },
+        {
+          name: "Cross-body Shoulder Stretch",
+          difficulty: "Beginner",
+          setup: [
+            "Stand tall or sit upright with shoulders relaxed.",
+            "Bring one arm across the front of your chest.",
+            "Use the opposite arm to gently support it above or below the elbow."
+          ],
+          execution: [
+            "Pull the arm lightly across the body until you feel a mild rear-shoulder stretch.",
+            "Hold while breathing slowly and keeping the neck relaxed.",
+            "Release gently and switch sides."
+          ],
+          tips: [
+            "Do not pull directly on the elbow joint.",
+            "Avoid sharp or pinching pain.",
+            "Keep the stretch gentle and pain-free."
+          ]
+        },
+        {
+          name: "Doorway Pec Stretch",
+          difficulty: "Beginner",
+          setup: [
+            "Stand in a doorway with forearm placed on the door frame.",
+            "Keep elbow around shoulder height or slightly lower.",
+            "Step one foot forward and keep ribs down."
+          ],
+          execution: [
+            "Lean forward gently until you feel a chest and front-shoulder stretch.",
+            "Hold while breathing slowly.",
+            "Switch sides and repeat."
+          ],
+          tips: [
+            "Do not crank the shoulder into pain.",
+            "Avoid arching the lower back.",
+            "Keep the stretch mild and controlled."
+          ]
+        }
+      ]
+    };
+
+    Object.entries({
+      CHEST: [
+        {
+          name: "Decline Bench Press",
+          difficulty: "Intermediate",
+          setup: ["Secure your legs on a decline bench and lie back with eyes under the bar.", "Grip the bar slightly wider than shoulder width and set shoulder blades tight.", "Keep wrists stacked, chest lifted, and feet locked under the pads."],
+          execution: ["Inhale and lower the bar toward the lower chest with control.", "Keep elbows angled rather than fully flared.", "Exhale and press the bar up until elbows are straight."],
+          tips: ["Do not bounce the bar off the chest.", "Avoid letting shoulders roll forward at the bottom.", "Use a spotter because unracking on decline can be awkward."]
+        },
+        {
+          name: "Machine Chest Press",
+          difficulty: "Beginner",
+          setup: ["Adjust the seat so handles line up with mid-chest.", "Keep back against the pad and feet flat on the floor.", "Grip handles with wrists straight and shoulders pulled down."],
+          execution: ["Exhale and press handles forward until arms are nearly straight.", "Squeeze the chest briefly without locking aggressively.", "Inhale and return slowly until chest is stretched."],
+          tips: ["Do not let the weight stack slam.", "Avoid shrugging shoulders during the press.", "Keep elbows below shoulder level if shoulders feel sensitive."]
+        },
+        {
+          name: "Pec Deck Fly",
+          difficulty: "Beginner",
+          setup: ["Adjust the seat so elbows or handles align with chest height.", "Keep back flat against the pad and chest lifted.", "Place forearms or hands on the pads with shoulders relaxed."],
+          execution: ["Exhale and bring the handles together in front of the chest.", "Pause and squeeze the pecs without rounding forward.", "Inhale and open arms slowly to a comfortable stretch."],
+          tips: ["Do not overstretch behind the body.", "Avoid using momentum from the torso.", "Keep shoulders down and away from ears."]
+        },
+        {
+          name: "Low Cable Fly",
+          difficulty: "Intermediate",
+          setup: ["Set both pulleys low and stand centered between the cables.", "Hold handles with palms facing up or inward and step forward.", "Keep a slight elbow bend and brace the core."],
+          execution: ["Exhale and sweep hands upward and inward toward upper chest level.", "Squeeze the chest at the top without shrugging.", "Inhale and lower slowly back to the stretched position."],
+          tips: ["Do not turn the fly into a curl.", "Avoid leaning backward to lift heavier weight.", "Keep the elbow bend consistent throughout."]
+        },
+        {
+          name: "Svend Press",
+          difficulty: "Beginner",
+          setup: ["Stand tall holding one or two plates pressed together at chest level.", "Keep elbows slightly lifted and shoulders down.", "Brace the core and squeeze the plates hard."],
+          execution: ["Exhale and press the plates straight forward.", "Keep squeezing inward through the whole rep.", "Inhale and pull the plates back to the chest with control."],
+          tips: ["Do not let the plates separate.", "Avoid shrugging or leaning back.", "Use lighter plates and focus on chest tension."]
+        },
+        {
+          name: "Landmine Chest Press",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Anchor one end of a barbell in a landmine or corner.", "Hold the loaded end with both hands at chest height.", "Stand staggered or kneel with core braced."],
+          execution: ["Exhale and press the bar up and forward along its arc.", "Keep ribs down and shoulders stable.", "Inhale and return the bar toward the chest."],
+          tips: ["Do not overarch the lower back.", "Avoid letting elbows flare too wide.", "Keep the press smooth and controlled."]
+        },
+        {
+          name: "Close-grip Push-ups",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Start in a high plank with hands inside shoulder width.", "Keep body straight from head to heels.", "Brace abs and squeeze glutes lightly."],
+          execution: ["Inhale and lower the chest while elbows travel close to the ribs.", "Pause briefly near the floor.", "Exhale and push back up to straight arms."],
+          tips: ["Do not let hips sag.", "Avoid placing hands so close that wrists hurt.", "Keep elbows controlled rather than flaring out."]
+        }
+      ],
+      BACK: [
+        {
+          name: "T-bar Row",
+          difficulty: "Intermediate",
+          setup: ["Stand over the T-bar with feet planted and knees soft.", "Hinge at the hips with a neutral spine.", "Grip the handles and brace your core."],
+          execution: ["Exhale and row the handle toward the lower chest.", "Squeeze shoulder blades together at the top.", "Inhale and lower until arms are extended."],
+          tips: ["Do not round your lower back.", "Avoid jerking the weight off the floor.", "Keep the chest angled down instead of standing upright."]
+        },
+        {
+          name: "Chest-supported Row",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Lie chest-down on an incline bench.", "Hold dumbbells below the shoulders with palms facing in.", "Keep feet planted and neck neutral."],
+          execution: ["Exhale and row dumbbells toward your ribs.", "Pause briefly while squeezing the upper back.", "Inhale and lower slowly to full arm extension."],
+          tips: ["Do not lift the chest off the bench.", "Avoid shrugging at the top.", "Keep wrists straight and elbows controlled."]
+        },
+        {
+          name: "Straight-arm Pulldown",
+          difficulty: "Beginner",
+          setup: ["Attach a straight bar or rope to a high cable.", "Stand facing the stack with arms extended and a slight elbow bend.", "Hinge slightly forward and brace your core."],
+          execution: ["Exhale and pull the bar down toward your thighs using the lats.", "Keep arms mostly straight throughout.", "Inhale and return slowly until lats stretch."],
+          tips: ["Do not bend elbows into a triceps pushdown.", "Avoid arching the back to finish.", "Keep shoulders away from ears."]
+        },
+        {
+          name: "Inverted Row",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Set a bar around waist height and lie under it.", "Grip the bar slightly wider than shoulders.", "Keep body straight with heels on the floor."],
+          execution: ["Exhale and pull your chest toward the bar.", "Pause briefly at the top.", "Inhale and lower under control to straight arms."],
+          tips: ["Do not let hips drop.", "Avoid reaching with the neck.", "Make it easier by bending knees or raising the bar."]
+        },
+        {
+          name: "Wide-grip Cable Row",
+          difficulty: "Intermediate",
+          setup: ["Sit at a cable row with a wide bar attachment.", "Hold the bar wider than shoulder width.", "Sit tall with chest up and knees slightly bent."],
+          execution: ["Exhale and pull the bar toward the upper ribs.", "Drive elbows out and back.", "Inhale and return slowly until arms extend."],
+          tips: ["Do not lean far backward.", "Avoid shrugging as you pull.", "Use control to target upper back and rear delts."]
+        },
+        {
+          name: "Meadows Row",
+          difficulty: "Intermediate",
+          setup: ["Stand beside a landmine bar with the loaded end near one foot.", "Hinge at the hips and grip the bar sleeve.", "Keep stance staggered and spine neutral."],
+          execution: ["Exhale and row the bar toward the hip.", "Let the elbow travel back and slightly out.", "Inhale and lower the bar with control."],
+          tips: ["Do not twist the torso aggressively.", "Avoid rounding the back.", "Use straps if grip limits back work."]
+        },
+        {
+          name: "Rack Pull",
+          difficulty: "Intermediate to Advanced",
+          setup: ["Set the bar on pins just below or above knee height.", "Stand with feet hip width and grip just outside legs.", "Brace hard and set lats before pulling."],
+          execution: ["Exhale and extend hips to stand tall with the bar.", "Keep the bar close to the body.", "Lower back to the pins under control."],
+          tips: ["Do not lean back at lockout.", "Avoid pulling from a rounded spine.", "Use this as a heavy back and hip-hinge accessory."]
+        }
+      ],
+      SHOULDERS: [
+        {
+          name: "Seated Dumbbell Press",
+          difficulty: "Intermediate",
+          setup: ["Sit on a bench with back support and dumbbells at shoulder height.", "Plant feet firmly and brace the core.", "Keep wrists stacked over elbows."],
+          execution: ["Exhale and press dumbbells overhead.", "Bring biceps near ears without clanging weights.", "Inhale and lower to shoulder level with control."],
+          tips: ["Do not overarch the lower back.", "Avoid letting elbows drift too far behind the body.", "Use a full but comfortable range."]
+        },
+        {
+          name: "Cable Lateral Raise",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Set a cable pulley low and stand side-on to the machine.", "Hold the handle with the outside hand.", "Keep a slight elbow bend and brace your torso."],
+          execution: ["Exhale and raise the arm out to shoulder height.", "Lead with the elbow and keep shoulder down.", "Inhale and lower slowly across the body."],
+          tips: ["Do not swing your body.", "Avoid shrugging at the top.", "Use light weight and constant tension."]
+        },
+        {
+          name: "Front Raise",
+          difficulty: "Beginner",
+          setup: ["Stand tall holding dumbbells or a plate in front of thighs.", "Keep elbows slightly bent and core tight.", "Set shoulders down away from ears."],
+          execution: ["Exhale and raise the weight to shoulder height.", "Pause briefly without leaning back.", "Inhale and lower slowly."],
+          tips: ["Do not swing the weight.", "Avoid raising far above shoulder height if it pinches.", "Keep ribs down and wrists neutral."]
+        },
+        {
+          name: "Machine Shoulder Press",
+          difficulty: "Beginner",
+          setup: ["Adjust the seat so handles start near shoulder height.", "Sit tall with back against the pad.", "Grip handles with wrists straight."],
+          execution: ["Exhale and press handles overhead.", "Stop just short of harsh elbow lockout.", "Inhale and lower slowly to the start."],
+          tips: ["Do not shrug shoulders upward.", "Avoid bouncing at the bottom.", "Keep head and back supported."]
+        },
+        {
+          name: "Cable Y Raise",
+          difficulty: "Intermediate",
+          setup: ["Set two cables low and hold opposite handles.", "Stand centered with arms crossed slightly in front.", "Brace core and keep shoulders down."],
+          execution: ["Exhale and raise arms diagonally into a Y shape.", "Pause at shoulder to head height.", "Inhale and lower slowly with control."],
+          tips: ["Do not arch the back to lift higher.", "Avoid bending elbows too much.", "Use very light weight for clean shoulder mechanics."]
+        },
+        {
+          name: "Dumbbell Scaption Raise",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Stand tall with dumbbells at your sides.", "Angle arms slightly forward from the body in the scapular plane.", "Brace core and keep thumbs slightly upward."],
+          execution: ["Exhale and raise dumbbells to shoulder height.", "Pause briefly with shoulders relaxed.", "Inhale and lower slowly."],
+          tips: ["Do not shrug at the top.", "Avoid swinging the weights.", "Use light dumbbells and smooth control."]
+        },
+        {
+          name: "Plate Halo",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Hold a plate or kettlebell in front of the chest.", "Stand tall with core braced.", "Keep elbows bent and shoulders relaxed."],
+          execution: ["Move the weight slowly around the head in a circular path.", "Keep ribs down and head still.", "Reverse direction after the target reps."],
+          tips: ["Do not rush the circle.", "Avoid hitting the head or overextending the back.", "Use a light load and smooth shoulder motion."]
+        }
+      ],
+      BICEPS: [
+        {
+          name: "Cable Curl",
+          difficulty: "Beginner",
+          setup: ["Attach a straight or EZ bar to a low cable.", "Stand tall with elbows beside the ribs.", "Grip the bar underhand with wrists straight."],
+          execution: ["Exhale and curl the bar toward the chest.", "Pause briefly at peak contraction.", "Inhale and lower slowly to full extension."],
+          tips: ["Do not lean back.", "Avoid letting elbows drift forward.", "Keep cable tension constant."]
+        },
+        {
+          name: "EZ Bar Curl",
+          difficulty: "Beginner",
+          setup: ["Stand holding an EZ bar with an underhand grip.", "Keep feet hip width and core braced.", "Pin elbows close to the torso."],
+          execution: ["Exhale and curl the bar upward.", "Squeeze the biceps at the top.", "Inhale and lower with control."],
+          tips: ["Do not swing the hips.", "Avoid bending wrists backward.", "Use the angled grip if straight bars bother wrists."]
+        },
+        {
+          name: "Spider Curl",
+          difficulty: "Intermediate",
+          setup: ["Lie chest-down on an incline bench.", "Let arms hang straight with dumbbells or an EZ bar.", "Keep shoulders fixed against the bench."],
+          execution: ["Exhale and curl the weight upward.", "Pause at the top without lifting the chest.", "Inhale and lower to full stretch."],
+          tips: ["Do not move the upper arms forward.", "Avoid heavy weights that shorten range.", "Keep reps strict and controlled."]
+        },
+        {
+          name: "Zottman Curl",
+          difficulty: "Intermediate",
+          setup: ["Stand with dumbbells at sides and palms forward.", "Keep elbows tucked and shoulders down.", "Brace the core."],
+          execution: ["Curl up with palms facing upward.", "Rotate palms downward at the top.", "Lower slowly with palms facing down, then reset."],
+          tips: ["Do not rush the wrist rotation.", "Avoid swinging the torso.", "Use lighter dumbbells than regular curls."]
+        },
+        {
+          name: "Reverse Curl",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Hold a barbell or EZ bar with palms facing down.", "Stand tall with elbows beside your torso.", "Keep wrists neutral and core tight."],
+          execution: ["Exhale and curl the bar upward.", "Keep palms down through the full rep.", "Inhale and lower slowly."],
+          tips: ["Do not let wrists collapse.", "Avoid leaning back.", "Expect lighter weight than standard curls."]
+        },
+        {
+          name: "Bayesian Cable Curl",
+          difficulty: "Intermediate",
+          setup: ["Set a cable low and stand facing away from the machine.", "Hold one handle with the arm slightly behind the body.", "Keep shoulder down and elbow stable."],
+          execution: ["Exhale and curl the handle forward and up.", "Squeeze the biceps while keeping upper arm still.", "Inhale and return to a deep stretch."],
+          tips: ["Do not let the shoulder roll forward.", "Avoid stepping too far if the stretch feels harsh.", "Control the bottom range carefully."]
+        }
+      ],
+      TRICEPS: [
+        {
+          name: "Straight Bar Pushdown",
+          difficulty: "Beginner",
+          setup: ["Attach a straight bar to a high cable.", "Stand close with elbows tucked to the ribs.", "Brace core and keep shoulders down."],
+          execution: ["Exhale and push the bar down until elbows extend.", "Squeeze triceps at the bottom.", "Inhale and return until forearms rise without elbow drift."],
+          tips: ["Do not lean your bodyweight onto the bar.", "Avoid flaring elbows.", "Keep wrists straight."]
+        },
+        {
+          name: "Single-arm Cable Pushdown",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Attach a single handle or use the cable without a handle.", "Stand facing the stack with one elbow pinned to your side.", "Keep torso still and wrist neutral."],
+          execution: ["Exhale and extend the elbow downward.", "Pause at full extension.", "Inhale and return slowly."],
+          tips: ["Do not twist the torso.", "Avoid letting the elbow move forward.", "Use light weight for clean isolation."]
+        },
+        {
+          name: "Diamond Push-ups",
+          difficulty: "Intermediate",
+          setup: ["Start in a plank with hands close together under the chest.", "Form a diamond shape if wrists tolerate it.", "Keep body straight and abs braced."],
+          execution: ["Inhale and lower with elbows close to the body.", "Pause near the bottom.", "Exhale and press back to the top."],
+          tips: ["Do not force the diamond shape if wrists hurt.", "Avoid hips sagging.", "Scale by doing them on knees or an incline."]
+        },
+        {
+          name: "Dumbbell Kickbacks",
+          difficulty: "Beginner",
+          setup: ["Hinge forward with a dumbbell in one hand.", "Keep upper arm close to the torso and elbow bent.", "Support yourself on a bench if needed."],
+          execution: ["Exhale and extend the elbow until the arm is straight.", "Pause and squeeze the triceps.", "Inhale and return slowly to the bent position."],
+          tips: ["Do not swing the dumbbell.", "Avoid dropping the elbow.", "Use light weight and strict control."]
+        },
+        {
+          name: "JM Press",
+          difficulty: "Advanced",
+          setup: ["Lie on a bench with a bar held above the upper chest.", "Use a moderate close grip.", "Set shoulder blades and keep wrists stacked."],
+          execution: ["Lower the bar toward the upper chest/neck line by bending elbows.", "Keep elbows in a controlled tucked path.", "Press back up by extending the triceps."],
+          tips: ["Do not use maximal loads while learning.", "Avoid letting wrists bend backward.", "Stop if elbows feel sharp pain."]
+        },
+        {
+          name: "Cable Overhead Rope Extension",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Attach a rope to a low or high cable depending on station setup.", "Face away from the machine with rope behind the head.", "Keep elbows forward and ribs down."],
+          execution: ["Exhale and extend elbows until arms are straight.", "Separate rope ends slightly at the finish.", "Inhale and lower slowly behind the head."],
+          tips: ["Do not flare elbows wide.", "Avoid arching the lower back.", "Control the stretch position."]
+        }
+      ],
+      LEGS: [
+        {
+          name: "Front Squat",
+          difficulty: "Intermediate to Advanced",
+          setup: ["Rest the bar across the front shoulders.", "Use a clean grip or crossed-arm grip.", "Stand shoulder width with chest tall and core braced."],
+          execution: ["Inhale and squat down while keeping elbows high.", "Descend until mobility allows a strong position.", "Exhale and drive up through mid-foot."],
+          tips: ["Do not let elbows drop.", "Avoid heels lifting off the floor.", "Keep torso upright and knees tracking toes."]
+        },
+        {
+          name: "Bulgarian Split Squat",
+          difficulty: "Intermediate",
+          setup: ["Place the rear foot on a bench behind you.", "Stand far enough forward so the front knee tracks comfortably.", "Hold dumbbells or use bodyweight."],
+          execution: ["Inhale and lower until the front thigh approaches parallel.", "Keep torso controlled and front foot planted.", "Exhale and drive up through the front leg."],
+          tips: ["Do not bounce off the bottom.", "Avoid letting the front knee cave inward.", "Start with bodyweight to find balance."]
+        },
+        {
+          name: "Hack Squat",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Set shoulders under the pads and back against the machine.", "Place feet shoulder width on the platform.", "Unlock safeties and brace your core."],
+          execution: ["Inhale and lower with knees tracking toes.", "Descend to a controlled depth.", "Exhale and press up without hard knee lockout."],
+          tips: ["Do not let hips lift from the pad.", "Avoid collapsing knees inward.", "Use full controlled range."]
+        },
+        {
+          name: "Goblet Squat",
+          difficulty: "Beginner",
+          setup: ["Hold a dumbbell or kettlebell close to the chest.", "Stand shoulder width with toes slightly out.", "Brace core and keep chest tall."],
+          execution: ["Inhale and squat between the knees.", "Pause briefly at a comfortable depth.", "Exhale and stand by pushing through the floor."],
+          tips: ["Do not let the weight drift away from the body.", "Avoid rounding the back.", "Use elbows to guide knees outward gently."]
+        },
+        {
+          name: "Lying Leg Curl",
+          difficulty: "Beginner",
+          setup: ["Lie face down on the leg curl machine.", "Adjust the pad just above the ankles.", "Keep hips pressed into the bench."],
+          execution: ["Exhale and curl heels toward glutes.", "Squeeze hamstrings at the top.", "Inhale and lower slowly to near full extension."],
+          tips: ["Do not lift hips off the pad.", "Avoid swinging the weight.", "Control the eccentric phase."]
+        },
+        {
+          name: "Seated Leg Curl",
+          difficulty: "Beginner",
+          setup: ["Sit with knees aligned to the machine pivot.", "Set the ankle pad behind the lower legs.", "Secure thigh pad and keep back supported."],
+          execution: ["Exhale and curl the pad down and back.", "Pause when hamstrings are contracted.", "Inhale and return slowly."],
+          tips: ["Do not rush the return.", "Avoid hips shifting in the seat.", "Use full range without knee discomfort."]
+        },
+        {
+          name: "Hip Thrust",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Place upper back against a bench and bar over the hips.", "Plant feet about shoulder width.", "Tuck chin slightly and brace your core."],
+          execution: ["Exhale and drive hips upward until torso is parallel to the floor.", "Squeeze glutes hard at the top.", "Inhale and lower under control."],
+          tips: ["Do not overextend the lower back.", "Avoid feet too far forward or too close.", "Keep ribs down at lockout."]
+        },
+        {
+          name: "Step-ups",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Stand facing a sturdy box or bench.", "Place one foot fully on the surface.", "Hold dumbbells if added load is needed."],
+          execution: ["Exhale and drive through the elevated foot to stand up.", "Control the top without pushing heavily from the trailing leg.", "Inhale and step down slowly."],
+          tips: ["Do not let the knee cave inward.", "Avoid bouncing off the floor.", "Use a box height you can control."]
+        },
+        {
+          name: "Sumo Deadlift",
+          difficulty: "Intermediate",
+          setup: ["Take a wide stance with toes turned out.", "Grip the bar inside the legs.", "Brace hard with chest up and hips close to the bar."],
+          execution: ["Exhale and push the floor apart as the bar rises.", "Keep knees tracking toes and bar close.", "Lower by hinging and bending knees under control."],
+          tips: ["Do not let knees collapse inward.", "Avoid starting with hips too high.", "Keep the spine neutral through the pull."]
+        }
+      ],
+      TRAPS: [
+        {
+          name: "Trap Bar Shrugs",
+          difficulty: "Beginner",
+          setup: ["Stand inside a trap bar and grip the handles.", "Keep feet hip width and arms straight.", "Brace core and stand tall."],
+          execution: ["Exhale and shrug shoulders straight upward.", "Pause briefly at the top.", "Inhale and lower slowly to full stretch."],
+          tips: ["Do not roll shoulders.", "Avoid bending elbows.", "Use controlled weight instead of bouncing."]
+        },
+        {
+          name: "Behind-the-back Barbell Shrugs",
+          difficulty: "Intermediate",
+          setup: ["Hold a barbell behind your thighs with palms facing back.", "Stand tall with chest open.", "Keep arms straight and core braced."],
+          execution: ["Exhale and shrug shoulders upward.", "Hold the squeeze briefly.", "Inhale and lower with control."],
+          tips: ["Do not lean forward excessively.", "Avoid bending elbows.", "Use a comfortable grip width."]
+        },
+        {
+          name: "Cable Shrugs",
+          difficulty: "Beginner",
+          setup: ["Attach a straight bar to a low cable.", "Stand facing the stack with bar held at thighs.", "Keep arms straight and posture tall."],
+          execution: ["Exhale and elevate shoulders.", "Pause at the top.", "Inhale and lower slowly while maintaining cable tension."],
+          tips: ["Do not use your calves or knees to bounce.", "Avoid rolling the shoulders.", "Let the traps stretch at the bottom."]
+        },
+        {
+          name: "Incline Dumbbell Shrugs",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Lie chest-down on an incline bench with dumbbells hanging.", "Keep neck neutral and arms straight.", "Let shoulder blades stretch forward slightly."],
+          execution: ["Exhale and shrug shoulder blades up and back.", "Squeeze the upper traps briefly.", "Inhale and lower with control."],
+          tips: ["Do not lift the chest off the bench.", "Avoid curling the dumbbells.", "Use a controlled tempo."]
+        },
+        {
+          name: "Power Shrugs",
+          difficulty: "Advanced",
+          setup: ["Hold a barbell at thigh level with feet hip width.", "Brace core and keep the bar close.", "Use a weight you can control explosively."],
+          execution: ["Dip slightly at the knees and hips.", "Drive upward and shrug powerfully.", "Reset under control before the next rep."],
+          tips: ["Do not turn it into a sloppy high pull.", "Avoid losing neutral spine.", "Use this only after mastering strict shrugs."]
+        },
+        {
+          name: "Suitcase Carry",
+          difficulty: "Beginner to Intermediate",
+          setup: ["Hold one heavy dumbbell or kettlebell at your side.", "Stand tall with shoulders level.", "Brace core to resist side bending."],
+          execution: ["Walk forward with slow controlled steps.", "Keep torso upright and hips level.", "Switch hands after the target distance."],
+          tips: ["Do not lean toward or away from the weight.", "Avoid shrugging the loaded shoulder.", "Use a load that challenges posture without breaking it."]
+        }
+      ]
+    }).forEach(([muscle, exercises]) => {
+      exerciseData[muscle].push(...exercises);
+    });
+
+    Object.entries({
+      CHEST: [
+        { name: "Incline Barbell Press", difficulty: "Intermediate", setup: ["Set an incline bench around 30 degrees and lie with eyes under the bar.", "Grip slightly wider than shoulder width and pin shoulder blades back.", "Plant feet firmly and keep wrists stacked."], execution: ["Inhale and lower the bar toward the upper chest.", "Exhale and press up along a slightly backward path.", "Control both the lowering and pressing phase."], tips: ["Do not set the bench too steep.", "Avoid bouncing the bar.", "Keep elbows under the wrists."] },
+        { name: "Reverse-grip Bench Press", difficulty: "Intermediate", setup: ["Lie on a flat bench with a secure underhand grip.", "Use a spotter and keep shoulder blades tight.", "Plant feet and brace before unracking."], execution: ["Lower the bar toward the lower chest with control.", "Keep elbows tucked as you descend.", "Press up while exhaling and maintaining wrist position."], tips: ["Use lighter weight while learning.", "Do not let wrists bend backward.", "Always use safety support or a spotter."] },
+        { name: "Smith Machine Bench Press", difficulty: "Beginner to Intermediate", setup: ["Set the bench so the bar tracks over mid-chest.", "Grip evenly and set shoulder blades into the bench.", "Keep feet planted and glutes on the pad."], execution: ["Inhale and lower the bar smoothly.", "Pause briefly above the chest.", "Exhale and press to the top without slamming the stops."], tips: ["Do not rely on the machine to fix poor shoulder position.", "Avoid locking elbows harshly.", "Use controlled range."] },
+        { name: "Smith Machine Incline Press", difficulty: "Beginner to Intermediate", setup: ["Set the bench to a low incline under the Smith bar.", "Grip slightly wider than shoulders.", "Keep chest lifted and shoulders pulled down."], execution: ["Lower the bar toward the upper chest.", "Press upward while exhaling.", "Return each rep to the same controlled bottom point."], tips: ["Do not let elbows flare too high.", "Avoid excessive arching.", "Keep the bench angle moderate."] },
+        { name: "Dumbbell Floor Press", difficulty: "Beginner", setup: ["Lie on the floor with knees bent and dumbbells beside the chest.", "Keep upper arms lightly touching the floor.", "Brace core and keep wrists neutral."], execution: ["Exhale and press dumbbells up.", "Lower slowly until triceps touch the floor.", "Pause briefly before the next rep."], tips: ["Do not bounce elbows off the floor.", "Avoid flaring elbows wide.", "Use this if bench pressing bothers shoulders."] },
+        { name: "Paused Dumbbell Bench Press", difficulty: "Intermediate", setup: ["Lie on a flat bench with dumbbells beside the chest.", "Plant feet firmly and pull shoulder blades back.", "Keep wrists stacked over elbows."], execution: ["Inhale and lower the dumbbells under control.", "Pause briefly at the bottom without relaxing the shoulders.", "Exhale and press back up smoothly."], tips: ["Do not bounce out of the bottom.", "Avoid flaring elbows straight out.", "Use a pause you can control without shoulder discomfort."] },
+        { name: "Single-arm Cable Press", difficulty: "Beginner to Intermediate", setup: ["Set a cable at chest height and stand in a split stance.", "Hold one handle with elbow bent beside the ribs.", "Brace core to resist rotation."], execution: ["Exhale and press the handle forward.", "Pause with the arm extended.", "Inhale and return slowly."], tips: ["Do not rotate your torso.", "Avoid shrugging the shoulder.", "Keep the cable path level with the chest."] },
+        { name: "Medicine Ball Chest Pass", difficulty: "Beginner to Intermediate", setup: ["Stand facing a wall or partner holding a medicine ball at chest height.", "Keep feet athletic and core braced.", "Set elbows slightly down from shoulder level."], execution: ["Explosively throw the ball from the chest.", "Catch or receive it with soft elbows.", "Reset posture before the next rep."], tips: ["Do not use a ball too heavy to throw fast.", "Avoid arching your back.", "Keep reps crisp and controlled."] }
+      ],
+      BACK: [
+        { name: "Neutral-grip Pulldown", difficulty: "Beginner", setup: ["Attach a neutral-grip handle to the pulldown.", "Secure thighs and sit tall.", "Start with arms extended and shoulders down."], execution: ["Pull elbows down toward your ribs.", "Pause near the upper chest.", "Return slowly to a full lat stretch."], tips: ["Do not lean back excessively.", "Avoid curling the handle.", "Keep chest proud."] },
+        { name: "Close-grip Pulldown", difficulty: "Beginner", setup: ["Use a close V-handle on the pulldown.", "Sit with thighs locked under the pad.", "Brace core and lean back slightly."], execution: ["Pull the handle to the upper chest.", "Drive elbows down and back.", "Control the return to the top."], tips: ["Do not pull behind the neck.", "Avoid swinging.", "Let the lats stretch fully."] },
+        { name: "Assisted Pull-up", difficulty: "Beginner", setup: ["Set assistance level on the machine.", "Grip the handles and place knees or feet on the support.", "Start with arms extended and shoulders active."], execution: ["Pull chest toward the handles.", "Pause briefly at the top.", "Lower slowly until arms extend."], tips: ["Do not bounce off the assistance pad.", "Avoid half reps.", "Reduce assistance gradually."] },
+        { name: "Chin-ups", difficulty: "Intermediate", setup: ["Grip the bar underhand around shoulder width.", "Hang with shoulders active and abs braced.", "Keep legs quiet."], execution: ["Pull elbows down as chin rises above the bar.", "Squeeze lats and biceps at the top.", "Lower under control."], tips: ["Do not kick for momentum.", "Avoid craning the neck.", "Use assistance if needed."] },
+        { name: "Deficit Deadlift", difficulty: "Advanced", setup: ["Stand on a low platform with the bar over mid-foot.", "Grip the bar and set a neutral spine.", "Brace hard before pulling."], execution: ["Push through the floor and keep bar close.", "Stand tall without leaning back.", "Lower with control to the floor."], tips: ["Do not use a high deficit.", "Avoid rounding the back.", "Use lighter weight than normal deadlifts."] },
+        { name: "Snatch-grip Deadlift", difficulty: "Advanced", setup: ["Take a wide snatch-style grip on the bar.", "Set feet hip width and brace tightly.", "Keep lats engaged and chest up."], execution: ["Drive through the floor as the bar stays close.", "Stand tall with shoulders controlled.", "Lower slowly while maintaining back position."], tips: ["Use straps if grip limits position.", "Do not round the spine.", "Start light due to long range."] },
+        { name: "Kneeling Straight-arm Pulldown", difficulty: "Beginner to Intermediate", setup: ["Attach a rope high and kneel facing the cable.", "Hold rope with arms extended overhead.", "Sit hips slightly back and brace."], execution: ["Pull the rope down in an arc while keeping arms mostly straight.", "Squeeze the lats as hands move toward the thighs.", "Return slowly to the overhead stretch."], tips: ["Do not turn it into a crunch.", "Avoid shrugging.", "Keep tension on the lats."] },
+        { name: "Renegade Row", difficulty: "Intermediate", setup: ["Start in a high plank holding dumbbells.", "Place feet wider for balance.", "Brace abs and glutes."], execution: ["Row one dumbbell toward the ribs.", "Lower it with control and switch sides.", "Keep hips as still as possible."], tips: ["Do not rotate the torso.", "Avoid using too heavy dumbbells.", "Keep wrists under shoulders."] }
+      ],
+      SHOULDERS: [
+        { name: "Push Press", difficulty: "Intermediate", setup: ["Hold a bar at the front shoulders.", "Stand with feet hip width and core braced.", "Keep elbows slightly forward."], execution: ["Dip slightly at knees and hips.", "Drive upward and press the bar overhead.", "Lower back to shoulders with control."], tips: ["Do not turn the dip into a squat.", "Avoid pressing forward.", "Lock ribs down overhead."] },
+        { name: "Z Press", difficulty: "Intermediate to Advanced", setup: ["Sit on the floor with legs straight.", "Hold dumbbells or bar at shoulder level.", "Brace hard and sit tall."], execution: ["Press overhead without leaning back.", "Finish with biceps near ears.", "Lower slowly to shoulders."], tips: ["Use light weight.", "Do not round the lower back.", "Keep legs grounded."] },
+        { name: "Kettlebell Press", difficulty: "Intermediate", setup: ["Clean a kettlebell to the rack position.", "Keep wrist straight and elbow under the bell.", "Brace core and glutes."], execution: ["Press the bell overhead while exhaling.", "Finish with arm vertical.", "Lower back to rack with control."], tips: ["Do not let wrist bend back.", "Avoid leaning sideways.", "Keep shoulder packed."] },
+        { name: "Lean-away Lateral Raise", difficulty: "Intermediate", setup: ["Hold a post with one hand and lean slightly away.", "Hold a dumbbell in the outside hand.", "Keep elbow soft and shoulder down."], execution: ["Raise the dumbbell to shoulder height.", "Pause briefly.", "Lower slowly through the long range."], tips: ["Do not swing.", "Avoid shrugging.", "Use light weight."] },
+        { name: "Machine Lateral Raise", difficulty: "Beginner", setup: ["Adjust seat so pads sit near upper arms.", "Sit tall with chest supported if available.", "Keep shoulders relaxed."], execution: ["Lift the pads outward to shoulder height.", "Pause at the top.", "Lower slowly."], tips: ["Do not jerk the machine.", "Avoid shrugging.", "Keep wrists relaxed."] },
+        { name: "Reverse Pec Deck", difficulty: "Beginner", setup: ["Sit facing the pec deck pad.", "Grip handles with arms at shoulder height.", "Keep chest against the pad."], execution: ["Open arms out and back.", "Squeeze rear delts at the end.", "Return slowly."], tips: ["Do not lean away from the pad.", "Avoid shrugging.", "Use a controlled range."] },
+        { name: "Cable Rear Delt Fly", difficulty: "Beginner to Intermediate", setup: ["Set cables around shoulder height.", "Hold opposite handles with arms crossed.", "Stand tall with core braced."], execution: ["Pull handles apart in a wide arc.", "Pause when arms are out to sides.", "Return slowly."], tips: ["Do not bend elbows too much.", "Avoid torso momentum.", "Keep shoulders down."] },
+        { name: "Bus Driver Plate Raise", difficulty: "Beginner to Intermediate", setup: ["Hold a plate in front of you at chest height.", "Stand tall with elbows slightly bent.", "Brace core."], execution: ["Rotate the plate side to side like a steering wheel.", "Keep shoulders controlled.", "Breathe steadily."], tips: ["Do not use a heavy plate.", "Avoid arching the back.", "Keep movement smooth."] }
+      ],
+      BICEPS: [
+        { name: "Machine Biceps Curl", difficulty: "Beginner", setup: ["Adjust seat so elbows align with the machine pivot.", "Place upper arms on the pad.", "Grip handles with wrists straight."], execution: ["Curl handles upward while exhaling.", "Pause and squeeze.", "Lower slowly to the start."], tips: ["Do not lift elbows off the pad.", "Avoid slamming the stack.", "Use full range."] },
+        { name: "Cable Hammer Curl", difficulty: "Beginner", setup: ["Attach a rope to a low cable.", "Stand tall with elbows tucked.", "Hold rope with palms facing each other."], execution: ["Curl rope upward.", "Separate ends slightly at the top.", "Lower slowly."], tips: ["Do not swing.", "Keep wrists neutral.", "Control the cable tension."] },
+        { name: "Drag Curl", difficulty: "Intermediate", setup: ["Hold a barbell with underhand grip.", "Stand tall and brace core.", "Keep bar close to the torso."], execution: ["Drag the bar upward along the body.", "Let elbows travel slightly behind you.", "Lower along the same path."], tips: ["Do not turn it into a regular curl.", "Avoid shrugging.", "Use moderate weight."] },
+        { name: "Cross-body Hammer Curl", difficulty: "Beginner", setup: ["Hold dumbbells at your sides.", "Stand tall with elbows close to ribs.", "Keep palms facing inward."], execution: ["Curl one dumbbell across the body toward the opposite shoulder.", "Pause briefly.", "Lower and alternate sides."], tips: ["Do not rotate the torso.", "Avoid swinging.", "Keep elbow close."] },
+        { name: "21s Barbell Curl", difficulty: "Intermediate", setup: ["Hold a barbell underhand.", "Stand tall with elbows tucked.", "Use lighter weight than normal curls."], execution: ["Do seven bottom-half reps.", "Do seven top-half reps.", "Finish with seven full-range reps."], tips: ["Do not rush the sequence.", "Avoid leaning back.", "Keep tension throughout."] },
+        { name: "Waiter Curl", difficulty: "Beginner to Intermediate", setup: ["Hold one dumbbell vertically with palms under the top plate.", "Keep elbows close together.", "Stand tall and brace."], execution: ["Curl the dumbbell toward the chest.", "Squeeze biceps at the top.", "Lower slowly."], tips: ["Do not let elbows flare wide.", "Avoid wrist discomfort.", "Use a light dumbbell."] },
+        { name: "Resistance Band Curl", difficulty: "Beginner", setup: ["Stand on a resistance band with feet hip width.", "Hold handles or band ends with palms up.", "Keep elbows beside ribs."], execution: ["Curl upward while exhaling.", "Pause at the top.", "Lower slowly against band tension."], tips: ["Do not lean back.", "Avoid letting band snap down.", "Keep wrists straight."] },
+        { name: "Seated Alternating Curl", difficulty: "Beginner", setup: ["Sit on a bench with dumbbells at sides.", "Keep chest tall and shoulders down.", "Brace core lightly."], execution: ["Curl one dumbbell up while rotating palm upward.", "Lower with control.", "Repeat on the other side."], tips: ["Do not swing while seated.", "Avoid rushing between arms.", "Keep elbows steady."] }
+      ],
+      TRICEPS: [
+        { name: "Machine Triceps Dip", difficulty: "Beginner", setup: ["Sit on the dip machine with back supported.", "Grip handles and keep shoulders down.", "Set elbows close to the body."], execution: ["Press handles down until elbows extend.", "Squeeze triceps at the bottom.", "Return slowly."], tips: ["Do not shrug.", "Avoid bouncing the weight.", "Keep chest lifted."] },
+        { name: "Assisted Triceps Dip", difficulty: "Beginner to Intermediate", setup: ["Set assistance level on the dip machine.", "Grip bars and keep torso fairly upright.", "Depress shoulders before lowering."], execution: ["Lower by bending elbows.", "Press back up through the palms.", "Control the top and bottom."], tips: ["Do not drop too deep.", "Avoid shoulder roll-forward.", "Use enough assistance for clean reps."] },
+        { name: "Reverse-grip Pushdown", difficulty: "Beginner", setup: ["Attach a straight bar to a high cable.", "Grip underhand with elbows tucked.", "Stand close and brace."], execution: ["Press bar down by extending elbows.", "Pause at the bottom.", "Return slowly."], tips: ["Do not let wrists bend.", "Avoid elbow drift.", "Use lighter weight."] },
+        { name: "Cross-body Cable Extension", difficulty: "Beginner to Intermediate", setup: ["Set a cable high and stand side-on.", "Hold the cable with one hand across your body.", "Keep elbow fixed near your side."], execution: ["Extend the arm diagonally down.", "Squeeze at full extension.", "Return slowly."], tips: ["Do not rotate your torso.", "Avoid flaring elbow.", "Keep the path smooth."] },
+        { name: "Tate Press", difficulty: "Intermediate", setup: ["Lie on a bench with dumbbells above the chest.", "Point elbows outward with palms facing forward.", "Use light to moderate weight."], execution: ["Bend elbows to lower dumbbells toward the chest.", "Extend elbows to return to the top.", "Keep upper arms controlled."], tips: ["Do not rush the bottom.", "Avoid shoulder discomfort.", "Use a lighter load than presses."] },
+        { name: "Rolling Dumbbell Extension", difficulty: "Intermediate", setup: ["Lie on a bench holding dumbbells above shoulders.", "Keep elbows bent slightly and shoulders packed.", "Plant feet firmly."], execution: ["Lower dumbbells beside the head.", "Let upper arms roll back slightly.", "Extend elbows and bring dumbbells back up."], tips: ["Do not drop weights quickly.", "Avoid elbow flare.", "Use smooth rhythm."] },
+        { name: "Bodyweight Triceps Extension", difficulty: "Intermediate", setup: ["Place hands on a bar or bench in front of you.", "Step feet back into an angled plank.", "Keep elbows pointing forward."], execution: ["Bend elbows and lower forehead toward hands.", "Pause briefly.", "Extend elbows to push back."], tips: ["Do not let elbows flare.", "Avoid sagging hips.", "Raise the bar to make it easier."] },
+        { name: "Band Triceps Pushdown", difficulty: "Beginner", setup: ["Anchor a band overhead.", "Hold ends with elbows tucked.", "Stand tall and brace."], execution: ["Push band down until arms straighten.", "Squeeze triceps.", "Return slowly under tension."], tips: ["Do not lean over the band.", "Avoid elbow movement.", "Use a smooth tempo."] }
+      ],
+      LEGS: [
+        { name: "Box Squat", difficulty: "Beginner to Intermediate", setup: ["Set a box behind you at appropriate height.", "Place bar on back or use bodyweight.", "Stand with feet shoulder width."], execution: ["Sit back to the box under control.", "Touch lightly without relaxing.", "Drive up through mid-foot."], tips: ["Do not crash onto the box.", "Avoid rocking backward.", "Keep knees tracking toes."] },
+        { name: "Pause Squat", difficulty: "Intermediate", setup: ["Set up like a regular barbell squat.", "Brace hard before descending.", "Keep feet stable."], execution: ["Squat to depth and pause for one to three seconds.", "Stay tight in the bottom.", "Drive up powerfully."], tips: ["Do not relax during the pause.", "Avoid losing spine position.", "Use lighter weight than normal squats."] },
+        { name: "Cyclist Squat", difficulty: "Beginner to Intermediate", setup: ["Elevate heels on a wedge or plates.", "Stand with a narrower stance.", "Hold weight at chest if needed."], execution: ["Squat down with knees traveling forward.", "Keep torso upright.", "Press through the balls and mid-foot to stand."], tips: ["Do not let knees cave in.", "Avoid heel lift beyond the wedge.", "Use controlled depth."] },
+        { name: "Cossack Squat", difficulty: "Intermediate", setup: ["Take a wide stance with toes slightly out.", "Keep chest tall and core braced.", "Start with bodyweight."], execution: ["Shift weight to one side and bend that knee.", "Keep the other leg straight.", "Push back to center and switch sides."], tips: ["Do not force depth.", "Avoid heel lifting on the working side.", "Move slowly."] },
+        { name: "Reverse Lunge", difficulty: "Beginner", setup: ["Stand tall with feet hip width.", "Hold dumbbells or use bodyweight.", "Brace core and look forward."], execution: ["Step one foot backward and lower into a lunge.", "Drive through the front foot to stand.", "Alternate sides or finish one leg first."], tips: ["Do not slam the back knee.", "Avoid front knee collapse.", "Keep steps controlled."] },
+        { name: "Curtsy Lunge", difficulty: "Beginner to Intermediate", setup: ["Stand tall with hands on hips or dumbbells at sides.", "Brace core and keep chest up.", "Start with a small diagonal step."], execution: ["Step one leg behind and across the other.", "Lower under control.", "Drive through the front leg to return."], tips: ["Do not twist the knee painfully.", "Avoid excessive crossing.", "Keep hips controlled."] },
+        { name: "Cable Pull-through", difficulty: "Beginner", setup: ["Attach a rope to a low cable and face away.", "Hold rope between legs and step forward.", "Hinge with soft knees and neutral spine."], execution: ["Push hips back to feel hamstrings.", "Exhale and drive hips forward.", "Squeeze glutes at the top."], tips: ["Do not squat the movement.", "Avoid rounding the back.", "Keep arms passive."] },
+        { name: "Good Morning", difficulty: "Intermediate", setup: ["Place a bar across the upper back.", "Stand hip width with knees slightly bent.", "Brace core and keep chest open."], execution: ["Hinge hips back while torso lowers.", "Stop when hamstrings stretch strongly.", "Drive hips forward to stand."], tips: ["Do not round the spine.", "Use light weight.", "Keep bar fixed on the back."] },
+        { name: "Glute Bridge", difficulty: "Beginner", setup: ["Lie on your back with knees bent and feet flat.", "Place feet about hip width.", "Brace core and keep ribs down."], execution: ["Drive hips upward and squeeze glutes.", "Pause at the top.", "Lower slowly to the floor."], tips: ["Do not overarch lower back.", "Avoid pushing mainly through toes.", "Keep knees aligned."] },
+        { name: "Seated Calf Raise", difficulty: "Beginner", setup: ["Sit on the calf raise machine with pads over thighs.", "Place balls of feet on the platform.", "Let heels drop to a comfortable stretch."], execution: ["Raise heels as high as possible.", "Pause and squeeze calves.", "Lower slowly into the stretch."], tips: ["Do not bounce.", "Use full range.", "Keep feet stable."] }
+      ],
+      ABS: [
+        { name: "Dead Bug", difficulty: "Beginner", setup: ["Lie on your back with arms up and knees at 90 degrees.", "Press lower back gently toward the floor.", "Brace your core before moving."], execution: ["Extend opposite arm and leg slowly.", "Return to center with control.", "Alternate sides while breathing steadily."], tips: ["Do not let the lower back arch.", "Move slowly.", "Shorten range if control breaks."] },
+        { name: "Hollow Body Hold", difficulty: "Intermediate", setup: ["Lie on your back with arms overhead.", "Press lower back into the floor.", "Lift shoulders and legs slightly."], execution: ["Hold the curved hollow position.", "Breathe shallow but steady.", "Keep tension until the target time ends."], tips: ["Do not let lower back lift.", "Bend knees to regress.", "Stop before form collapses."] },
+        { name: "Toe Touch Crunch", difficulty: "Beginner", setup: ["Lie on your back with legs raised toward the ceiling.", "Reach arms toward your toes.", "Keep chin relaxed."], execution: ["Exhale and lift shoulder blades to reach upward.", "Pause at the top.", "Lower slowly."], tips: ["Do not yank the neck.", "Avoid swinging legs.", "Focus on rib-to-pelvis crunch."] },
+        { name: "Jackknife Sit-up", difficulty: "Intermediate", setup: ["Lie flat with arms overhead and legs straight.", "Brace the core.", "Keep movement controlled."], execution: ["Lift torso and legs together.", "Reach hands toward feet.", "Lower slowly to the floor."], tips: ["Do not slam the back down.", "Avoid using momentum.", "Bend knees if needed."] },
+        { name: "Plank Shoulder Taps", difficulty: "Beginner to Intermediate", setup: ["Start in a high plank with feet slightly wide.", "Keep hands under shoulders.", "Brace abs and glutes."], execution: ["Tap one shoulder with the opposite hand.", "Return hand to floor and switch sides.", "Keep hips steady."], tips: ["Do not rock side to side.", "Avoid hips sagging.", "Slow down for more control."] },
+        { name: "Plank Jacks", difficulty: "Intermediate", setup: ["Start in a forearm or high plank.", "Keep body straight and core tight.", "Set feet together."], execution: ["Jump feet out and back in.", "Maintain plank alignment.", "Breathe steadily."], tips: ["Do not let hips bounce.", "Step feet instead of jumping if needed.", "Keep shoulders over elbows or wrists."] },
+        { name: "High Plank Hold", difficulty: "Beginner", setup: ["Place hands under shoulders and extend legs back.", "Spread fingers and press into the floor.", "Squeeze glutes lightly."], execution: ["Hold a straight line from head to heels.", "Breathe steadily.", "Keep pushing the floor away."], tips: ["Do not lock into a sagging back.", "Avoid shrugging.", "Stop when alignment breaks."] },
+        { name: "Bear Crawl Hold", difficulty: "Beginner to Intermediate", setup: ["Start on hands and knees.", "Set hands under shoulders and knees under hips.", "Lift knees a few inches from the floor."], execution: ["Hold the hover position while breathing.", "Keep back flat and hips level.", "Maintain steady pressure through hands and toes."], tips: ["Do not let knees rise too high.", "Avoid rounding the back.", "Keep neck neutral."] },
+        { name: "Bird Dog", difficulty: "Beginner", setup: ["Start on hands and knees.", "Brace core and keep spine neutral.", "Look at the floor."], execution: ["Extend opposite arm and leg.", "Pause while keeping hips square.", "Return and switch sides."], tips: ["Do not rotate hips.", "Avoid arching the back.", "Move slowly."] },
+        { name: "Pallof Press", difficulty: "Beginner to Intermediate", setup: ["Set a cable or band at chest height.", "Stand side-on holding the handle at your chest.", "Brace core and bend knees slightly."], execution: ["Press the handle straight forward.", "Resist rotation from the cable.", "Return slowly to the chest."], tips: ["Do not twist toward the anchor.", "Avoid shrugging.", "Use moderate tension."] }
+      ],
+      TRAPS: [
+        { name: "Kettlebell Farmer Carry", difficulty: "Beginner", setup: ["Hold kettlebells at your sides.", "Stand tall with shoulders level.", "Brace core and grip firmly."], execution: ["Walk with controlled steps.", "Keep chest tall and neck neutral.", "Set weights down safely."], tips: ["Do not lean side to side.", "Avoid shrugging constantly.", "Stop before grip fails."] },
+        { name: "Overhead Carry", difficulty: "Intermediate", setup: ["Press dumbbells or kettlebells overhead.", "Lock ribs down and arms vertical.", "Brace core."], execution: ["Walk slowly with weights overhead.", "Keep shoulders stable.", "Lower safely after the distance."], tips: ["Do not arch the back.", "Avoid bent wrists.", "Use light weight at first."] },
+        { name: "High Pull", difficulty: "Intermediate", setup: ["Hold a barbell or dumbbells in front of thighs.", "Stand athletic with core braced.", "Keep weight close to body."], execution: ["Drive upward and pull elbows high.", "Let traps assist the lift.", "Lower with control."], tips: ["Do not yank from the lower back.", "Avoid shoulder pain range.", "Keep load moderate."] },
+        { name: "Snatch-grip High Pull", difficulty: "Advanced", setup: ["Hold the bar with a wide snatch grip.", "Hinge slightly with chest up.", "Brace before pulling."], execution: ["Extend hips and pull elbows high.", "Keep bar close.", "Lower and reset each rep."], tips: ["Do not chase maximal weight.", "Avoid loose spine position.", "Use explosive but clean reps."] },
+        { name: "Dumbbell High Pull", difficulty: "Intermediate", setup: ["Hold dumbbells at thighs.", "Stand tall with knees soft.", "Brace core."], execution: ["Pull dumbbells upward with elbows leading.", "Pause near chest height.", "Lower slowly."], tips: ["Do not shrug into the ears only.", "Avoid swinging.", "Keep wrists below elbows."] },
+        { name: "Chest-supported Dumbbell Shrug", difficulty: "Intermediate", setup: ["Lie chest-down on an incline bench with dumbbells hanging below the shoulders.", "Keep arms straight, neck neutral, and chest supported.", "Let shoulder blades stretch slightly at the bottom."], execution: ["Shrug the shoulder blades up and back.", "Pause briefly at peak contraction.", "Lower slowly to a full stretch."], tips: ["Do not lift your chest off the bench.", "Avoid bending elbows.", "Use controlled tempo."] },
+        { name: "Scapular Pull-up", difficulty: "Beginner to Intermediate", setup: ["Hang from a pull-up bar with arms straight.", "Keep core braced.", "Let shoulders elevate gently."], execution: ["Pull shoulder blades down without bending elbows.", "Pause briefly.", "Return to the dead hang."], tips: ["Do not turn it into a pull-up.", "Avoid swinging.", "Use assisted support if needed."] },
+        { name: "Smith Machine Shrug", difficulty: "Beginner to Intermediate", setup: ["Set the Smith machine bar around thigh height.", "Hold the bar with arms straight and stand tall.", "Brace core and keep neck neutral."], execution: ["Shrug shoulders straight up.", "Pause at the top.", "Lower to a full stretch."], tips: ["Do not roll shoulders.", "Avoid jerking from knees.", "Keep elbows straight."] }
+      ],
+      "SHOULDER STABILITY & MOBILITY": [
+        { name: "Band Shoulder Pass-throughs", difficulty: "Beginner", setup: ["Hold a light band wide in front of your body.", "Stand tall with ribs down.", "Use a very wide grip at first."], execution: ["Move the band overhead and behind you slowly.", "Return to the front with control.", "Keep elbows straight but relaxed."], tips: ["Do not force painful range.", "Avoid arching the back.", "Widen grip if needed."] },
+        { name: "Wall Angels", difficulty: "Beginner", setup: ["Stand with back against a wall.", "Place arms in a goalpost position.", "Keep ribs down and chin tucked."], execution: ["Slide arms up and down the wall.", "Stay within comfortable range.", "Breathe slowly."], tips: ["Do not force wrists to the wall.", "Avoid rib flare.", "Keep movement smooth."] },
+        { name: "Serratus Punch", difficulty: "Beginner", setup: ["Lie on your back holding light dumbbells above shoulders.", "Keep elbows straight.", "Set shoulder blades relaxed."], execution: ["Reach fists upward by lifting shoulder blades.", "Pause briefly.", "Lower shoulder blades back down."], tips: ["Do not bend elbows.", "Avoid shrugging toward ears.", "Use light weight."] },
+        { name: "Bottoms-up Kettlebell Hold", difficulty: "Intermediate", setup: ["Hold a light kettlebell upside down in rack position.", "Keep wrist vertical and elbow under hand.", "Brace core."], execution: ["Hold steady for time.", "Breathe while keeping the bell balanced.", "Switch sides carefully."], tips: ["Do not use a heavy bell.", "Avoid wrist collapse.", "Stop if shoulder pain appears."] },
+        { name: "Quadruped Shoulder CARs", difficulty: "Beginner", setup: ["Start on hands and knees.", "Brace core and keep back flat.", "Keep one hand planted while the other arm moves."], execution: ["Circle the free arm slowly through available range.", "Control the shoulder blade.", "Reverse direction after reps."], tips: ["Do not twist the torso.", "Avoid painful pinching.", "Move slowly."] },
+        { name: "Thread the Needle", difficulty: "Beginner", setup: ["Start on hands and knees.", "Place hands under shoulders.", "Keep hips over knees."], execution: ["Reach one arm under the body and rotate gently.", "Pause for a stretch.", "Return and repeat on the other side."], tips: ["Do not force the shoulder down.", "Avoid holding your breath.", "Keep hips stable."] }
+      ]
+    }).forEach(([muscle, exercises]) => {
+      exerciseData[muscle].push(...exercises);
+    });
+
+    const muscleSelect = document.getElementById("muscleSelect");
+    const exerciseSelect = document.getElementById("exerciseSelect");
+    const exerciseTitle = document.getElementById("exerciseTitle");
+    const muscleBadge = document.getElementById("muscleBadge");
+    const targetText = document.getElementById("targetText");
+    const difficultyText = document.getElementById("difficultyText");
+    const exerciseVisual = document.getElementById("exerciseVisual");
+    const imageCaption = document.getElementById("imageCaption");
+    const setupList = document.getElementById("setupList");
+    const executionList = document.getElementById("executionList");
+    const tipsList = document.getElementById("tipsList");
+
+    function createOption(value, label) {
+      const option = document.createElement("option");
+      option.value = value;
+      option.textContent = label;
+      return option;
+    }
+
+    function renderBullets(element, items) {
+      element.innerHTML = "";
+      items.forEach((item) => {
+        const li = document.createElement("li");
+        li.className = "flex gap-3";
+        li.innerHTML = `
+          <span class="mt-2 h-2 w-2 shrink-0 rounded-full bg-neon shadow-[0_0_10px_rgba(57,255,20,0.8)]"></span>
+          <span>${item}</span>
+        `;
+        element.appendChild(li);
+      });
+    }
+
+    function getMuscleIcon(muscle) {
+      const icons = {
+        CHEST: "M184 246 C214 188 278 174 300 226 C322 174 386 188 416 246 C382 276 336 286 300 260 C264 286 218 276 184 246 Z",
+        BACK: "M190 152 C230 124 370 124 410 152 L386 302 C352 342 248 342 214 302 Z",
+        SHOULDERS: "M154 220 C174 154 226 124 300 124 C374 124 426 154 446 220 C402 208 364 208 300 232 C236 208 198 208 154 220 Z",
+        BICEPS: "M190 284 C188 214 226 160 286 154 C330 150 358 176 360 214 C362 262 324 304 266 314 C234 320 208 310 190 284 Z",
+        TRICEPS: "M202 156 C254 130 336 144 380 198 C414 240 404 292 362 316 C332 334 290 326 274 296 C326 280 344 238 318 210 C290 180 244 184 216 218 Z",
+        LEGS: "M238 130 L294 130 L278 338 L218 338 Z M306 130 L362 130 L382 338 L322 338 Z",
+        ABS: "M230 132 L370 132 L392 328 L208 328 Z M260 166 L340 166 M250 214 L350 214 M242 262 L358 262",
+        TRAPS: "M218 158 C242 196 266 212 300 212 C334 212 358 196 382 158 L428 286 C380 266 342 260 300 260 C258 260 220 266 172 286 Z",
+        "SHOULDER STABILITY & MOBILITY": "M154 220 C174 154 226 124 300 124 C374 124 426 154 446 220 C402 208 364 208 300 232 C236 208 198 208 154 220 Z M224 252 C252 292 348 292 376 252 M252 180 C278 206 322 206 348 180"
+      };
+      return icons[muscle] || icons.CHEST;
+    }
+
+    function escapeSvgText(text) {
+      return String(text)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function getExerciseVisualSvg(exerciseName, muscle) {
+      const title = escapeSvgText(exerciseName);
+      const subtitle = escapeSvgText(`${muscle} EXERCISE DIAGRAM`);
+      const iconPath = getMuscleIcon(muscle);
+      return `
+        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="400" viewBox="0 0 600 400">
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#111111"/>
+              <stop offset="0.55" stop-color="#1b1b1b"/>
+              <stop offset="1" stop-color="#071407"/>
+            </linearGradient>
+            <linearGradient id="fiber" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#39FF14"/>
+              <stop offset="0.5" stop-color="#F8FF24"/>
+              <stop offset="1" stop-color="#39FF14"/>
+            </linearGradient>
+            <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+              <stop offset="0" stop-color="#39FF14" stop-opacity="0.28"/>
+              <stop offset="1" stop-color="#39FF14" stop-opacity="0"/>
+            </radialGradient>
+            <pattern id="fiberLines" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(25)">
+              <rect width="12" height="12" fill="transparent"/>
+              <path d="M0 6 H12" stroke="#39FF14" stroke-width="2" opacity="0.7"/>
+            </pattern>
+            <filter id="softGlow">
+              <feGaussianBlur stdDeviation="4" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          <rect width="600" height="400" fill="url(#bg)"/>
+          <rect width="600" height="400" fill="url(#glow)"/>
+          <g opacity="0.22" stroke="#ffffff" stroke-width="1">
+            <path d="M0 80 H600 M0 160 H600 M0 240 H600 M0 320 H600"/>
+            <path d="M100 0 V400 M200 0 V400 M300 0 V400 M400 0 V400 M500 0 V400"/>
+          </g>
+          <rect x="28" y="72" width="544" height="238" rx="18" fill="#0c0c0c" stroke="#39FF14" stroke-width="2" opacity="0.86"/>
+          <circle cx="296" cy="193" r="112" fill="#39FF14" opacity="0.08"/>
+          <path d="${iconPath}" fill="none" stroke="#39FF14" stroke-width="18" stroke-linecap="round" stroke-linejoin="round" filter="url(#softGlow)"/>
+          <path d="${iconPath}" fill="none" stroke="url(#fiberLines)" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.95"/>
+          <circle cx="300" cy="94" r="30" fill="#111111" stroke="#F8FF24" stroke-width="7"/>
+          <path d="M132 324 H468" stroke="url(#fiber)" stroke-width="8" stroke-linecap="round"/>
+          <g font-family="Arial, Helvetica, sans-serif">
+            <text x="300" y="42" text-anchor="middle" font-size="17" font-weight="900" fill="#F8FF24" letter-spacing="3">${subtitle}</text>
+            <text x="300" y="356" text-anchor="middle" font-size="27" font-weight="900" fill="#ffffff">${title}</text>
+
+            <rect x="44" y="228" width="150" height="58" rx="10" fill="#151515" stroke="#ffffff" opacity="0.88"/>
+            <text x="62" y="254" font-size="13" font-weight="900" fill="#ffffff">TARGET AREA</text>
+            <text x="62" y="275" font-size="12" font-weight="800" fill="#39FF14">${escapeSvgText(muscle)}</text>
+
+            <rect x="406" y="228" width="150" height="58" rx="10" fill="#151515" stroke="#ffffff" opacity="0.88"/>
+            <text x="424" y="254" font-size="13" font-weight="900" fill="#ffffff">FORM FOCUS</text>
+            <text x="424" y="275" font-size="12" font-weight="800" fill="#39FF14">Control + Range</text>
+          </g>
+        </svg>
+      `;
+    }
+
+    const EXERCISE_DB_URL = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/dist/exercises.json";
+    const EXERCISE_IMAGE_BASE_URL = "https://raw.githubusercontent.com/yuhonas/free-exercise-db/main/exercises/";
+    let exerciseImageDbPromise = null;
+    let photoRequestId = 0;
+
+    const exerciseImageAliases = {
+      "bench press": "barbell bench press",
+      "push-ups": "pushups",
+      "pull-ups": "pullups",
+      "lat pulldown": "wide-grip lat pulldown",
+      "bent-over barbell row": "bent over barbell row",
+      "seated cable row": "seated cable rows",
+      "overhead barbell press": "standing military press",
+      "dumbbell lateral raise": "side lateral raise",
+      "face pulls": "face pull",
+      "barbell curl": "barbell curl",
+      "hammer curl": "hammer curls",
+      "incline dumbbell curl": "incline dumbbell curl",
+      "tricep rope pushdown": "triceps pushdown - rope attachment",
+      "skull crushers": "lying triceps press",
+      "barbell squat": "barbell full squat",
+      "romanian deadlift": "romanian deadlift",
+      "leg press": "leg press",
+      "walking lunges": "walking lunge",
+      "hanging leg raise": "hanging leg raise",
+      "ab wheel rollout": "ab roller",
+      "planks": "plank",
+      "barbell shrugs": "barbell shrug",
+      "dumbbell shrugs": "dumbbell shrug",
+      "dumbbell fly": "dumbbell flyes",
+      "chest dips": "dips - chest version",
+      "machine chest press": "machine bench press",
+      "pec deck fly": "butterfly",
+      "straight-arm pulldown": "straight-arm pulldown",
+      "inverted row": "inverted row",
+      "seated dumbbell press": "seated dumbbell press",
+      "front raise": "front dumbbell raise",
+      "machine shoulder press": "machine shoulder press",
+      "ez bar curl": "ez-bar curl",
+      "reverse curl": "reverse barbell curl",
+      "diamond push-ups": "diamond pushups",
+      "dumbbell kickbacks": "tricep dumbbell kickback",
+      "front squat": "barbell front squat",
+      "hack squat": "hack squat",
+      "goblet squat": "goblet squat",
+      "lying leg curl": "lying leg curls",
+      "seated leg curl": "seated leg curl",
+      "hip thrust": "barbell hip thrust",
+      "sumo deadlift": "sumo deadlift",
+      "crunches": "crunches",
+      "lying leg raises": "flat bench lying leg raise",
+      "reverse crunch": "reverse crunch",
+      "bicycle crunch": "air bike",
+      "mountain climbers": "mountain climbers",
+      "sit-ups": "sit-up",
+      "side plank": "side bridge",
+      "v-ups": "jackknife sit-up",
+      "dead bug": "dead bug",
+      "hollow body hold": "hollow hold",
+      "bird dog": "bird dog"
+    };
+
+    function normalizeExerciseName(name) {
+      return name
+        .toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/-/g, " ")
+        .replace(/[^a-z0-9\s]/g, "")
+        .replace(/\b(barbell|dumbbell|cable|machine|smith|single|arm|one|standing|seated|lying|incline|decline|close|wide|grip|weighted|bodyweight)\b/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function strictNormalizeExerciseName(name) {
+      return name
+        .toLowerCase()
+        .replace(/&/g, " and ")
+        .replace(/-/g, " ")
+        .replace(/[^a-z0-9\s]/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    function getNameTokens(name) {
+      return normalizeExerciseName(name).split(" ").filter((token) => token.length > 2);
+    }
+
+    function getImageDb() {
+      if (!exerciseImageDbPromise) {
+        exerciseImageDbPromise = fetch(EXERCISE_DB_URL)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Exercise image database unavailable");
+            }
+
+            return response.json();
+          })
+          .then((items) => items.filter((item) => item && item.name && item.images && item.images.length));
+      }
+
+      return exerciseImageDbPromise;
+    }
+
+    function findBestExerciseImage(exerciseName, items) {
+      const alias = exerciseImageAliases[exerciseName.toLowerCase()] || exerciseName;
+      const targetNormalized = strictNormalizeExerciseName(alias);
+
+      const exactMatch = items.find((item) => strictNormalizeExerciseName(item.name) === targetNormalized);
+      if (exactMatch) {
+        return exactMatch.images[0];
+      }
+
+      return null;
+    }
+
+    function renderExercisePhoto(exerciseName, muscle) {
+      const fallbackSvg = getExerciseVisualSvg(exerciseName, muscle);
+      const currentRequestId = ++photoRequestId;
+
+      exerciseVisual.innerHTML = `
+        <div class="photo-loading">Searching verified exercise photo...</div>
+      `;
+
+      getImageDb()
+        .then((items) => {
+          if (currentRequestId !== photoRequestId) return;
+
+          const imagePath = findBestExerciseImage(exerciseName, items);
+
+          if (!imagePath) {
+            exerciseVisual.innerHTML = fallbackSvg;
+            imageCaption.textContent = `${exerciseName} Diagram`;
+            return;
+          }
+
+          const img = new Image();
+          img.width = 600;
+          img.height = 400;
+          img.alt = `${exerciseName} exercise photo`;
+          img.loading = "eager";
+          img.referrerPolicy = "no-referrer";
+
+          img.onload = () => {
+            if (currentRequestId !== photoRequestId) return;
+            exerciseVisual.innerHTML = "";
+            exerciseVisual.appendChild(img);
+            imageCaption.textContent = `${exerciseName} Photo`;
+          };
+
+          img.onerror = () => {
+            if (currentRequestId !== photoRequestId) return;
+            exerciseVisual.innerHTML = fallbackSvg;
+            imageCaption.textContent = `${exerciseName} Diagram`;
+          };
+
+          img.src = `${EXERCISE_IMAGE_BASE_URL}${encodeURI(imagePath)}`;
+        })
+        .catch(() => {
+          if (currentRequestId !== photoRequestId) return;
+          exerciseVisual.innerHTML = fallbackSvg;
+          imageCaption.textContent = `${exerciseName} Diagram`;
+        });
+    }
+
+    function populateMuscles() {
+      Object.keys(exerciseData).forEach((muscle) => {
+        muscleSelect.appendChild(createOption(muscle, muscle));
+      });
+    }
+
+    function populateExercises() {
+      const selectedMuscle = muscleSelect.value;
+      exerciseSelect.innerHTML = "";
+
+      exerciseData[selectedMuscle].forEach((exercise, index) => {
+        exerciseSelect.appendChild(createOption(String(index), exercise.name));
+      });
+
+      exerciseSelect.value = "0";
+      renderExercise();
+    }
+
+    function renderExercise() {
+      const selectedMuscle = muscleSelect.value;
+      const selectedExercise = exerciseData[selectedMuscle][Number(exerciseSelect.value)];
+
+      exerciseTitle.textContent = selectedExercise.name;
+      muscleBadge.textContent = selectedMuscle;
+      targetText.textContent = `Target Muscle Group: ${selectedMuscle}`;
+      difficultyText.textContent = `Difficulty: ${selectedExercise.difficulty}`;
+      imageCaption.textContent = `${selectedExercise.name} Photo`;
+      renderExercisePhoto(selectedExercise.name, selectedMuscle);
+
+      renderBullets(setupList, selectedExercise.setup);
+      renderBullets(executionList, selectedExercise.execution);
+      renderBullets(tipsList, selectedExercise.tips);
+    }
+
+    muscleSelect.addEventListener("change", populateExercises);
+    exerciseSelect.addEventListener("change", renderExercise);
+
+    populateMuscles();
+    populateExercises();
+  </script>
+</body>
+</html>
